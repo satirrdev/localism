@@ -1,0 +1,85 @@
+/* Hallmark · macrostructure: Workbench · genre: modern-minimal · theme: Cobalt (dark/zinc) · enrichment: none
+ * nav: app-shell header · footer: Ft2 Inline single line
+ * pre-emit critique: P5 H5 E5 S5 R4 V5
+ * axes: paper=dark (zinc-950 · L13% hue 260) · display=grotesk-sans (Geist) · accent=cool blue oklch(74% 0.14 256)
+ * contrast: pass (40–41) · nav: header · footer: Ft2 · slop: pass (42–45) · mobile: pass (34, 49, 50–57)
+ */
+
+/* Tailwind v4 emits these as :root custom properties AND generates bg-/text-/border- utilities */
+@theme {
+  /* -- Paper · zinc-950 ground, never pure #000 */
+  --color-paper: oklch(13% 0.005 260);
+  --color-paper-2: oklch(17% 0.006 260);
+  --color-paper-3: oklch(21% 0.006 260);
+
+  /* -- Rules / hairlines · zinc-800 / zinc-700 */
+  --color-rule: oklch(27% 0.008 260);
+  --color-rule-2: oklch(34% 0.008 260);
+
+  /* -- Ink · zinc-100/200, never pure #fff */
+  --color-ink: oklch(96% 0.004 260);
+  --color-ink-2: oklch(90% 0.005 260);
+  --color-muted: oklch(71% 0.006 260);
+  --color-neutral: oklch(56% 0.006 260);
+
+  /* -- The one cobalt signal (lightened for dark ground) */
+  --color-accent: oklch(74% 0.14 256);
+  --color-accent-ink: oklch(13% 0.01 260);
+  --color-focus: oklch(74% 0.14 256);
+
+  /* -- Panel · zinc-900/50 blend for the dropzone surface */
+  --color-panel: oklch(15% 0.006 260);
+  --color-panel-2: oklch(20% 0.008 260);
+
+  /* -- Status */
+  --color-ok: oklch(74% 0.14 155);
+  --color-error: oklch(65% 0.17 25);
+
+  /* -- Radius · sleek, large for the dark register */
+  --radius-sm: 0.75rem;
+  --radius-md: 1rem;
+}
+
+:root {
+  /* -- Fonts (Geist preserved from next/font) */
+  --font-display: var(--font-geist-sans);
+  --font-body: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+
+  /* -- Type scale · major third 1.25 */
+  --text-xs: 0.8rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-md: 1.25rem;
+  --text-lg: 1.5625rem;
+  --text-xl: 1.9531rem;
+  --text-2xl: 2.4414rem;
+  --text-3xl: 3.0518rem;
+
+  /* -- Space · 4pt scale, named by role */
+  --space-3xs: 0.125rem;
+  --space-2xs: 0.25rem;
+  --space-xs: 0.5rem;
+  --space-sm: 0.75rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2.5rem;
+  --space-2xl: 4rem;
+  --space-3xl: 6rem;
+
+  /* -- Motion */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in: cubic-bezier(0.7, 0, 0.84, 0);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-micro: 120ms;
+  --dur-short: 220ms;
+  --dur-long: 420ms;
+
+  /* -- Z · named six-level scale */
+  --z-base: 1;
+  --z-raised: 10;
+  --z-sticky: 200;
+  --z-sticky-nav: 300;
+  --z-modal: 400;
+  --z-toast: 500;
+}

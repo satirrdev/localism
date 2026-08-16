@@ -1,0 +1,68 @@
+# .agentremember — Localism project memory
+# Agent MUST re-read this file at the start of every session and re-read any listed
+# file before editing it. Do not rely on session memory.
+
+## Non-negotiable workflow
+- FINISH ALL FILE EDITS FIRST, THEN BUILD ONCE. Never run `npm run build` after
+  editing a single file. Batch edits, then one build + one lint at the end.
+- Do NOT kill running `next-server` processes. They may belong to other 9router
+  sessions. Start new servers on a NEW port instead (e.g. `next start -p 401x`).
+- If `next dev`/`next build` fails, run `npx next build --webpack` to get the real
+  error (Turbopack often hides it behind "Error evaluating Node.js code").
+
+## Architectural rules (source of truth: RULES.md / .agentrules)
+1. ZERO SERVER CALLS — all computation 100% in-browser. Never suggest external API.
+2. THREAD SAFETY — heavy work (WASM, PDF, image transforms) MUST go to Web Workers.
+3. MEMORY HYGIENE — `URL.revokeObjectURL` on every object URL; terminate workers;
+   no RAM leaks.
+4. STACK — Next.js App Router, Tailwind CSS, Lucide React, Shadcn UI components.
+5. NO HALLUCINATED LIBRARIES — pure Web APIs (Canvas, FileReader, Crypto) or
+   battle-tested libs (pdf-lib, @ffmpeg/ffmpeg v0.12+).
+
+## Design system (Hallmark · genre: modern-minimal · theme: Cobalt dark/zinc · macrostructure: Workbench)
+- Fonts: Geist + Geist Mono via next/font (layout.tsx). Preserve them.
+- Palette: full dark mode. tokens.css `@theme` — paper=zinc-950 (oklch 13%), panel=zinc-900/50,
+  rule=zinc-800/700, one electric cobalt accent oklch(74% 0.14 256) lightened for dark, ok/error status.
+  NO graphite tokens anymore (replaced by panel). Read tokens.css before styling.
+- Colors MUST reference tokens (bg-paper, bg-panel, text-ink, border-rule-2, text-accent…).
+  Never inline hex/oklch/rgb in components. Add new values to tokens.css `@theme` first.
+- tokens.css lives at project ROOT; globals.css imports it as `@import "../../tokens.css";`
+  (relative to src/app — do NOT "fix" this to a single `..`; that path is wrong).
+- No italic headers. No invented metrics. No `transition-all` / `transition: all`.
+- Focus: `:focus-visible` global outline, instant (never animated).
+- Motion: `--ease-out` etc from tokens. Reduced-motion block in globals.css must stay
+  (kills .reveal + .status-dot pulse).
+- `overflow-x: clip` on html AND body (globals.css) — never `hidden`.
+- Tab strip uses `no-scrollbar` utility (defined in globals.css via @utility) for horizontal scroll.
+
+## File inventory (re-read before editing)
+- /home/localism/RULES.md — architectural rules (mirror of .agentrules)
+- /home/localism/.agentrules — same rules, consumed by agents
+- /home/localism/tokens.css — Hallmark dark-zinc tokens (@theme + :root). Stamp at top.
+- /home/localism/src/app/layout.tsx — RootLayout, Geist fonts, metadata (title/description)
+- /home/localism/src/app/globals.css — Tailwind v4 entry, font @theme inline, no-scrollbar @utility,
+  base styles, focus-visible, ::selection, .reveal engine, .status-dot pulse, reduced-motion
+- /home/localism/src/app/page.tsx — client Home page: compact hero + tabs + dropzone + footer Ft2
+- /home/localism/src/components/site-header.tsx — wordmark + "100% Offline / Local Processing"
+  pill badge with pulsing green dot (.status-dot)
+- /home/localism/src/components/tool-tabs.tsx — TOOLS catalog + roving-tabindex tablist, active
+  tab = pill highlight (bg-paper-2 + inset ring), no-scrollbar horizontal scroll, arrow keys
+- /home/localism/src/components/file-dropzone.tsx — drag-over state (dragDepth counter),
+  WHOLE CARD IS A LABEL (fully clickable, not just a button), tool heading/lede merged into
+  card header (no duplicate page header), file staging with image preview, per-file URL
+  revocation, rejected-file handling
+- /home/localism/src/components/reveal.tsx — one-shot IntersectionObserver reveal (.is-in)
+- /home/localism/.hallmark/log.json — Hallmark diversification log (append, don't clobber)
+
+## Known pitfalls in this codebase
+- Tailwind v4: use `wrap-anywhere` (NOT `overflow-wrap-anywhere`). Use `bg-(--var)` /
+  token utilities. Do NOT create self-referential `@theme inline { --x: var(--x) }`.
+- React 19 + Next 16.3.1: `LayoutProps<"/">` typing in layout.tsx is intentional.
+- React 19 rule: never mutate refs during render (`ref.current = x` in body is a lint error).
+  Sync refs in a useEffect instead.
+- FileDropzone: object-URL revocation is unmount-only via filesRef; per-file revocation
+  happens in removeFile. Do NOT add a `files`-dependent effect that revokes live URLs
+  (breaks visible thumbnails).
+- `<label>` dropzone: do NOT nest the file `<input>` inside the label's drop surface as a
+  descendant of another interactive element; input sits at top of the label card with
+  `peer sr-only`, label uses `peer-focus-visible:outline` classes for keyboard focus.

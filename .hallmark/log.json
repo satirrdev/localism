@@ -1,0 +1,11 @@
+[
+  {
+    "date": "2026-08-15",
+    "macrostructure": "Workbench",
+    "theme": "Cobalt",
+    "enrichment": "none",
+    "nav": "app-shell header",
+    "footer": "Ft2 inline single line",
+    "brief": "Localism · local-first utility dashboard (header offline indicator, tool tabs, drag-drop upload)"
+  }
+]
