@@ -9,10 +9,18 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@ffmpeg/core": "^0.12.10",
+    "@ffmpeg/ffmpeg": "^0.12.15",
+    "@ffmpeg/util": "^0.12.2",
+    "js-sha1": "^0.7.0",
+    "js-sha256": "^1.0.0",
+    "js-sha512": "^0.9.0",
     "lucide-react": "^1.31.0",
     "next": "16.3.1",
+    "pdf-lib": "^1.17.1",
     "react": "19.2.8",
-    "react-dom": "19.2.8"
+    "react-dom": "19.2.8",
+    "spark-md5": "^3.0.2"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",

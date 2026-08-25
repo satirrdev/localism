@@ -1,15 +1,16 @@
 "use client";
 
 import {
-  ArrowLeftRight,
   Fingerprint,
   Image as ImageIcon,
   FileText,
+  ScanLine,
+  Video,
   type LucideIcon,
 } from "lucide-react";
 import { useCallback, useRef } from "react";
 
-export type ToolId = "image" | "pdf" | "convert" | "hash";
+export type ToolId = "image" | "pdf" | "video" | "hash" | "exif";
 
 export interface Tool {
   id: ToolId;
@@ -28,7 +29,7 @@ export const TOOLS: Tool[] = [
     icon: ImageIcon,
     accept: "image/*",
     heading: "Compress and convert images",
-    lede: "Resize, recompress, and transcode to WebP. Sharp WASM runs in a worker so the main thread stays responsive.",
+    lede: "Resize, recompress, and transcode images. OffscreenCanvas runs in a Web Worker so the main thread stays responsive.",
     hint: "PNG, JPG, WebP, GIF, AVIF",
   },
   {
@@ -41,13 +42,13 @@ export const TOOLS: Tool[] = [
     hint: "PDF",
   },
   {
-    id: "convert",
-    label: "Convert",
-    icon: ArrowLeftRight,
-    accept: "",
-    heading: "Convert between formats",
-    lede: "Docs, sheets, media, and archives — transcoded on-device. ffmpeg.wasm does the heavy lifting in a worker, nothing is uploaded.",
-    hint: "Any file",
+    id: "video",
+    label: "Video",
+    icon: Video,
+    accept: "video/*",
+    heading: "Compress and convert videos",
+    lede: "Compress, convert, and extract audio from videos. FFmpeg WASM runs in a Web Worker so the main thread stays responsive.",
+    hint: "MP4, WebM, GIF, MP3",
   },
   {
     id: "hash",
@@ -55,8 +56,17 @@ export const TOOLS: Tool[] = [
     icon: Fingerprint,
     accept: "",
     heading: "Verify file integrity",
-    lede: "Compute SHA-256, SHA-1, and MD5 from a streamed read. The digest is generated locally, never sent anywhere.",
+    lede: "Compute SHA-256, SHA-1, SHA-512, and MD5 from a streamed read in a Web Worker. Handles huge files without breaking a sweat — nothing is uploaded.",
     hint: "Any file",
+  },
+  {
+    id: "exif",
+    label: "EXIF Scrubber",
+    icon: ScanLine,
+    accept: "image/jpeg,image/png,.jpg,.jpeg,.png",
+    heading: "Strip EXIF metadata from images",
+    lede: "Drop a JPG or PNG and all embedded metadata — GPS, camera model, timestamps — is erased on-device via Canvas. Nothing leaves your browser.",
+    hint: "JPG, PNG",
   },
 ];
 
