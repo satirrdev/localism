@@ -61,8 +61,6 @@ src/
     video-panel.tsx       # Video compress/convert (FFmpeg WASM)
     hash-panel.tsx        # File hashing (SHA + MD5)
     exif-scrubber.tsx     # EXIF metadata stripping
-    file-dropzone.tsx     # Shared drag-and-drop component
-    value-proposition.tsx # Why Localism section
     reveal.tsx            # IntersectionObserver fade-in
 public/
   ffmpeg/                 # FFmpeg WASM core
@@ -79,4 +77,4 @@ public/
 
 ## License
 
-GNU AGPL
+[AGPL-3.0](LICENSE) — GNU Affero General Public License v3.0
