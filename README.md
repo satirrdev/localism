@@ -79,4 +79,4 @@ public/
 
 ## License
 
-MIT
+GNU AGPL
