@@ -1,6 +1,6 @@
 "use client";
 
-import { ShieldCheck, Zap, Infinity } from "lucide-react";
+import { ShieldCheck, Zap, Infinity, Code2, ExternalLink } from "lucide-react";
 import { Reveal } from "@/components/reveal";
 
 export function ValueProposition() {
@@ -18,7 +18,7 @@ export function ValueProposition() {
             <p className="mt-3 max-w-[58ch] text-sm leading-relaxed text-muted sm:text-base">
               Cloud tools hold your files hostage and charge you for their
               server costs. Localism turns your own browser into a
-              high-performance engine&nbsp;\u2014 completely offline, private, and
+              high-performance engine — completely offline, private, and
               unlimited.
             </p>
           </div>
@@ -84,7 +84,7 @@ export function ValueProposition() {
                   </h3>
                   <p className="mt-2 text-sm leading-relaxed text-muted">
                     Cloud SaaS charges subscriptions because they pay for
-                    servers. Your device does the work&nbsp;\u2014 Localism is
+                    servers. Your device does the work — Localism is
                     free.
                   </p>
                 </div>
@@ -95,18 +95,28 @@ export function ValueProposition() {
             </div>
           </div>
 
-          <p className="mt-6 font-mono text-xs text-neutral">
-            Verified open source &amp; auditable on{" "}
-            <a
-              href="https://github.com/satirrdev/localism"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="underline decoration-rule-2 underline-offset-2 transition-colors hover:text-ink"
-            >
-              GitHub
-            </a>
-            . Read the code yourself.
-          </p>
+          <a
+            href="https://github.com/satirrdev/localism"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group mt-6 inline-flex items-center gap-2.5 rounded-full border border-rule bg-paper-2 py-2 pl-3 pr-4 transition-colors duration-200 ease-out hover:border-rule-2 hover:bg-panel-2"
+          >
+            <span className="flex h-7 w-7 items-center justify-center rounded-full bg-accent/10">
+              <Code2
+                aria-hidden="true"
+                className="h-4 w-4 text-accent"
+                strokeWidth={1.75}
+              />
+            </span>
+            <span className="font-mono text-xs font-medium text-ink-2">
+              Verified open source &amp; auditable
+            </span>
+            <ExternalLink
+              aria-hidden="true"
+              className="h-3.5 w-3.5 text-muted transition-colors duration-200 group-hover:text-accent"
+              strokeWidth={1.75}
+            />
+          </a>
         </div>
       </Reveal>
     </section>

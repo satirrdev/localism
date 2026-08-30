@@ -4,13 +4,12 @@ import {
   Fingerprint,
   Image as ImageIcon,
   FileText,
-  ScanLine,
   Video,
   type LucideIcon,
 } from "lucide-react";
 import { useCallback, useRef } from "react";
 
-export type ToolId = "image" | "pdf" | "video" | "hash" | "exif";
+export type ToolId = "image" | "pdf" | "video" | "hash";
 
 export interface Tool {
   id: ToolId;
@@ -28,8 +27,8 @@ export const TOOLS: Tool[] = [
     label: "Image",
     icon: ImageIcon,
     accept: "image/*",
-    heading: "Compress and convert images",
-    lede: "Resize, recompress, and transcode images. OffscreenCanvas runs in a Web Worker so the main thread stays responsive.",
+    heading: "Compress, convert, and strip EXIF",
+    lede: "Resize, recompress, transcode, and remove EXIF metadata from images. OffscreenCanvas runs in a Web Worker so the main thread stays responsive.",
     hint: "PNG, JPG, WebP, GIF, AVIF",
   },
   {
@@ -58,15 +57,6 @@ export const TOOLS: Tool[] = [
     heading: "Verify file integrity",
     lede: "Compute SHA-256, SHA-1, SHA-512, and MD5 from a streamed read in a Web Worker. Handles huge files without breaking a sweat — nothing is uploaded.",
     hint: "Any file",
-  },
-  {
-    id: "exif",
-    label: "EXIF Scrubber",
-    icon: ScanLine,
-    accept: "image/jpeg,image/png,.jpg,.jpeg,.png",
-    heading: "Strip EXIF metadata from images",
-    lede: "Drop a JPG or PNG and all embedded metadata — GPS, camera model, timestamps — is erased on-device via Canvas. Nothing leaves your browser.",
-    hint: "JPG, PNG",
   },
 ];
 

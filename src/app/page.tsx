@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { HashPanel } from "@/components/hash-panel";
 import { ImagePanel } from "@/components/image-panel";
-import { ExifScrubber } from "@/components/exif-scrubber";
 import { PdfPanel } from "@/components/pdf-panel";
 import { VideoPanel } from "@/components/video-panel";
 import { Reveal } from "@/components/reveal";
@@ -41,8 +40,6 @@ export default function Home() {
 
           {activeTool === "image" ? (
             <ImagePanel key={tool.id} tool={tool} />
-          ) : activeTool === "exif" ? (
-            <ExifScrubber key={tool.id} tool={tool} />
           ) : activeTool === "pdf" ? (
             <PdfPanel key={tool.id} tool={tool} />
           ) : activeTool === "video" ? (
