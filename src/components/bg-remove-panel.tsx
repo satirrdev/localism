@@ -142,6 +142,8 @@ export function BgRemovePanel({ tool }: { tool: Tool }) {
         /* preload model so subsequent runs are instant */
         if (!modelReady) {
           await preload({
+            publicPath: "/bgremove/",
+            device: "gpu",
             progress: (key, current, total) => {
               setProgress({ key, current, total });
             },
@@ -153,6 +155,8 @@ export function BgRemovePanel({ tool }: { tool: Tool }) {
         setProgress({ key: "compute", current: 0, total: 1 });
 
         const blob = await removeBackground(target, {
+          publicPath: "/bgremove/",
+          device: "gpu",
           progress: (key, current, total) => {
             setProgress({ key, current, total });
           },
@@ -383,8 +387,8 @@ export function BgRemovePanel({ tool }: { tool: Tool }) {
       {/* ── helper note ───────────────────────────── */}
       <p className="mt-3 flex items-center gap-2 rounded-xl border border-rule bg-paper-2 px-3 py-2 text-xs leading-relaxed text-muted animate-pop">
         <span className="text-accent">⚡</span>
-        Powered by in-browser ONNX AI. First run may take a few seconds to load
-        the model locally.
+        Powered by OIEL — in-browser ONNX AI. First run may take a few seconds
+        to load the model locally.
         {modelReady && (
           <span className="ml-auto flex items-center gap-1 rounded-full bg-ok/15 px-2 py-0.5 font-mono text-[0.625rem] font-semibold text-ok">
             <Check aria-hidden="true" className="h-3 w-3" strokeWidth={2} />
@@ -448,7 +452,7 @@ export function BgRemovePanel({ tool }: { tool: Tool }) {
                         />
                         <span className="text-xs text-muted">
                           {status === "downloading"
-                            ? "Downloading AI model…"
+                            ? "Loading AI model…"
                             : "Removing background…"}
                         </span>
                       </>
@@ -474,7 +478,7 @@ export function BgRemovePanel({ tool }: { tool: Tool }) {
                 <span className="flex items-center gap-1.5 text-xs text-muted">
                   {isDownloading && <Loader2 aria-hidden="true" className="h-3 w-3 animate-spin" />}
                   {isDownloading
-                    ? "Downloading AI Model (cached after first run)…"
+                    ? "Loading AI Model (cached after first run)…"
                     : "Extracting subject & removing background…"}
                 </span>
                 <span className="font-mono text-[0.625rem] text-muted">{stagePct}%</span>
