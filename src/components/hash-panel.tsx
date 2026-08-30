@@ -306,6 +306,7 @@ export function HashPanel({ tool }: { tool: Tool }) {
           <span
             className={[
               "flex h-12 w-12 items-center justify-center rounded-full transition-colors duration-200 ease-out",
+              !isDragOver && "animate-float",
               isDragOver
                 ? "bg-accent/10 text-accent"
                 : "bg-paper-2 text-muted",
@@ -425,12 +426,12 @@ export function HashPanel({ tool }: { tool: Tool }) {
                     : "…"}
                 </span>
               </div>
-              <div className="h-1.5 w-full overflow-hidden rounded-full bg-paper-3">
-                <div
-                  className="h-full rounded-full bg-accent transition-[width] duration-200 ease-out"
-                  style={{ width: `${progress.percentage}%` }}
-                />
-              </div>
+          <div className="h-1.5 w-full overflow-hidden rounded-full bg-paper-3">
+            <div
+              className="animate-shimmer h-full rounded-full bg-accent transition-[width] duration-200 ease-out"
+              style={{ width: `${progress.percentage}%` }}
+            />
+          </div>
               <div className="flex items-center justify-between">
                 <span className="text-xs text-muted">
                   Computing SHA-256 · SHA-1 · SHA-512 · MD5
@@ -454,12 +455,12 @@ export function HashPanel({ tool }: { tool: Tool }) {
 
           {/* ── Result cards ─────────────────────── */}
           {hashes && (
-            <div className="space-y-2">
+            <div className="stagger space-y-2">
               {ALGOS.map(({ key, label }) => (
                 <div
                   key={key}
                   className={[
-                    "flex items-center gap-3 rounded-xl border px-3 py-2.5",
+                    "hover-lift flex items-center gap-3 rounded-xl border px-3 py-2.5",
                     matchedAlgo === key
                       ? "border-ok/50 bg-ok/5"
                       : "border-rule bg-paper-2",
@@ -540,7 +541,7 @@ export function HashPanel({ tool }: { tool: Tool }) {
 
               {showNoMatch && (
                 <div
-                  className="mt-3 flex items-center gap-2 rounded-lg border border-error/40 bg-error/10 px-3 py-2"
+                  className="animate-shake mt-3 flex items-center gap-2 rounded-lg border border-error/40 bg-error/10 px-3 py-2"
                   role="alert"
                 >
                   <XCircle

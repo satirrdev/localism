@@ -19,9 +19,9 @@ function Dialog({ open, onClose, children }: { open: boolean; onClose: () => voi
         type="button"
         aria-label="Close"
         onClick={onClose}
-        className="absolute inset-0 bg-black/60"
+        className="absolute inset-0 bg-black/60 animate-pulse-soft"
       />
-      <div className="relative w-full max-w-md rounded-2xl border border-rule-2 bg-panel-2 p-5 shadow-2xl">
+      <div className="animate-pop relative w-full max-w-md rounded-2xl border border-rule-2 bg-panel-2 p-5 shadow-2xl">
         <button
           type="button"
           onClick={onClose}
@@ -56,11 +56,11 @@ export function SiteHeader() {
         <a
           href="#"
           aria-label="Localism home"
-          className="flex items-center gap-2 font-mono text-sm font-semibold tracking-tight text-ink"
+          className="group flex items-center gap-2 font-mono text-sm font-semibold tracking-tight text-ink"
         >
           <span
             aria-hidden="true"
-            className="inline-block h-2 w-2 rounded-[2px] bg-accent"
+            className="inline-block h-2 w-2 rounded-[2px] bg-accent transition-transform duration-200 ease-out group-hover:scale-125"
           />
           localism
         </a>
@@ -71,9 +71,9 @@ export function SiteHeader() {
           onClick={() => setOpen(true)}
           aria-haspopup="dialog"
           aria-expanded={open}
-          className="flex cursor-pointer items-center gap-2 rounded-full border border-rule bg-paper-2 px-3 py-1.5 transition-colors duration-200 ease-out hover:border-rule-2 hover:bg-panel-2"
+          className="hover-lift flex cursor-pointer items-center gap-2 rounded-full border border-rule bg-paper-2 px-3 py-1.5 transition-colors duration-200 ease-out hover:border-rule-2 hover:bg-panel-2"
         >
-          <span aria-hidden="true" className="relative flex h-2 w-2">
+          <span aria-hidden="true" className="animate-glow relative flex h-2 w-2">
             <span className="absolute inline-flex h-full w-full rounded-full bg-ok opacity-60" />
             <span className="status-dot relative inline-flex h-2 w-2 rounded-full bg-ok" />
           </span>

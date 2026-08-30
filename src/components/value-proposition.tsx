@@ -24,7 +24,7 @@ export function ValueProposition() {
           </div>
 
           <div className="grid gap-4 sm:grid-cols-5 sm:gap-4">
-            <div className="flex flex-col justify-between gap-6 rounded-2xl border border-rule bg-panel/40 p-6 transition-colors duration-200 hover:border-rule-2 sm:col-span-3 sm:p-8">
+            <div className="hover-lift flex flex-col justify-between gap-6 rounded-2xl border border-rule bg-panel/40 p-6 transition-colors duration-200 hover:border-rule-2 sm:col-span-3 sm:p-8">
               <div>
                 <p className="mb-3 font-mono text-[0.625rem] uppercase tracking-[0.14em] text-neutral">
                   01
@@ -48,7 +48,7 @@ export function ValueProposition() {
             </div>
 
             <div className="flex flex-col gap-4 sm:col-span-2 sm:gap-4">
-              <div className="flex flex-col justify-between rounded-2xl border border-rule bg-panel/40 p-6 transition-colors duration-200 hover:border-rule-2 sm:flex-1 sm:p-6">
+              <div className="hover-lift flex flex-col justify-between rounded-2xl border border-rule bg-panel/40 p-6 transition-colors duration-200 hover:border-rule-2 sm:flex-1 sm:p-6">
                 <div>
                   <p className="mb-3 font-mono text-[0.625rem] uppercase tracking-[0.14em] text-neutral">
                     02
@@ -70,7 +70,7 @@ export function ValueProposition() {
                 </p>
               </div>
 
-              <div className="flex flex-col justify-between rounded-2xl border border-rule bg-panel/40 p-6 transition-colors duration-200 hover:border-rule-2 sm:flex-1 sm:p-6">
+              <div className="hover-lift flex flex-col justify-between rounded-2xl border border-rule bg-panel/40 p-6 transition-colors duration-200 hover:border-rule-2 sm:flex-1 sm:p-6">
                 <div>
                   <p className="mb-3 font-mono text-[0.625rem] uppercase tracking-[0.14em] text-neutral">
                     03
@@ -99,7 +99,7 @@ export function ValueProposition() {
             href="https://github.com/satirrdev/localism"
             target="_blank"
             rel="noopener noreferrer"
-            className="group mt-6 inline-flex items-center gap-2.5 rounded-full border border-rule bg-paper-2 py-2 pl-3 pr-4 transition-colors duration-200 ease-out hover:border-rule-2 hover:bg-panel-2"
+            className="group mt-6 inline-flex items-center gap-2.5 rounded-full border border-rule bg-paper-2 py-2 pl-3 pr-4 transition-colors duration-200 ease-out hover:border-rule-2 hover:bg-panel-2 hover-lift"
           >
             <span className="flex h-7 w-7 items-center justify-center rounded-full bg-accent/10">
               <Code2

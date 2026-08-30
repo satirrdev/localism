@@ -110,18 +110,21 @@ export function ToolTabs({ active, onChange }: ToolTabsProps) {
             onClick={() => onChange(tool.id)}
             onKeyDown={onKeyDown}
             className={[
-              "flex shrink-0 items-center gap-2 whitespace-nowrap rounded-full px-4 py-2 text-sm font-medium",
-              "transition-colors duration-200 ease-out active:translate-y-px",
+              "group flex shrink-0 items-center gap-2 whitespace-nowrap rounded-full px-4 py-2 text-sm font-medium",
+              "transition-all duration-200 ease-out active:translate-y-px",
               isActive
-                ? "bg-paper-2 text-ink shadow-[inset_0_0_0_1px_var(--color-rule-2)]"
-                : "text-muted hover:bg-paper-2/50 hover:text-ink-2",
+                ? "bg-paper-2 text-ink shadow-[inset_0_0_0_1px_var(--color-rule-2)] hover-lift"
+                : "text-muted hover:bg-paper-2/50 hover:text-ink-2 active:scale-95",
             ].join(" ")}
           >
             <Icon
               aria-hidden="true"
-              className={
-                isActive ? "h-4 w-4 text-accent" : "h-4 w-4 text-muted"
-              }
+              className={[
+                "h-4 w-4 transition-transform duration-200 ease-out",
+                isActive
+                  ? "text-accent animate-pulse-soft"
+                  : "text-muted group-hover:scale-110",
+              ].join(" ")}
               strokeWidth={1.75}
             />
             {tool.label}

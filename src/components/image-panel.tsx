@@ -327,6 +327,7 @@ export function ImagePanel({ tool }: { tool: Tool }) {
           <span
             className={[
               "flex h-12 w-12 items-center justify-center rounded-full transition-colors duration-200 ease-out",
+              !isDragOver && "animate-float",
               isDragOver
                 ? "bg-accent/10 text-accent"
                 : "bg-paper-2 text-muted",
@@ -586,7 +587,7 @@ export function ImagePanel({ tool }: { tool: Tool }) {
           </div>
           <div className="h-1.5 w-full overflow-hidden rounded-full bg-paper-3">
             <div
-              className="h-full rounded-full bg-accent transition-[width] duration-200 ease-out"
+              className="animate-shimmer h-full rounded-full bg-accent transition-[width] duration-200 ease-out"
               style={{ width: `${progress.value}%` }}
             />
           </div>
@@ -595,10 +596,10 @@ export function ImagePanel({ tool }: { tool: Tool }) {
 
       {/* ── Result ───────────────────────────────────── */}
       {resultUrl && file && (
-        <div className="mt-4 space-y-3">
+        <div className="animate-pop mt-4 space-y-3">
           {/* Comparison cards */}
           <div className="grid gap-3 sm:grid-cols-2">
-            <div className="rounded-xl border border-rule bg-paper-2 p-3">
+            <div className="hover-lift rounded-xl border border-rule bg-paper-2 p-3">
               <span className="mb-1 block font-mono text-[0.625rem] uppercase tracking-[0.08em] text-muted">
                 Original
               </span>
@@ -610,13 +611,13 @@ export function ImagePanel({ tool }: { tool: Tool }) {
                 {dims ? ` · ${dims.w} × ${dims.h}` : ""}
               </p>
             </div>
-            <div className="rounded-xl border border-ok/30 bg-paper-2 p-3">
+            <div className="hover-lift rounded-xl border border-ok/30 bg-paper-2 p-3">
               <div className="mb-1 flex items-center gap-2">
                 <span className="font-mono text-[0.625rem] uppercase tracking-[0.08em] text-muted">
                   Processed
                 </span>
                 {savings !== null && (
-                  <span className="rounded-full bg-ok/15 px-2 py-0.5 font-mono text-[0.625rem] font-semibold text-ok">
+                  <span className="animate-pop rounded-full bg-ok/15 px-2 py-0.5 font-mono text-[0.625rem] font-semibold text-ok">
                     {savings >= 0
                       ? `-${savings.toFixed(1)}%`
                       : `+${Math.abs(savings).toFixed(1)}%`}

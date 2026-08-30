@@ -22,7 +22,7 @@ export default function Home() {
       <main className="flex-1 py-6 sm:py-10">
         <Reveal>
           <div className="mx-auto w-full max-w-[72rem] px-4 sm:px-6">
-            <div className="mb-4 sm:mb-6">
+            <div className="mb-4 sm:mb-6 stagger">
               <p className="font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-muted">
                 Localism / utility suite
               </p>
@@ -35,18 +35,22 @@ export default function Home() {
               </p>
             </div>
 
-            <ToolTabs active={activeTool} onChange={setActiveTool} />
+            <div className="stagger">
+              <ToolTabs active={activeTool} onChange={setActiveTool} />
+            </div>
           </div>
 
-          {activeTool === "image" ? (
-            <ImagePanel key={tool.id} tool={tool} />
-          ) : activeTool === "pdf" ? (
-            <PdfPanel key={tool.id} tool={tool} />
-          ) : activeTool === "video" ? (
-            <VideoPanel key={tool.id} tool={tool} />
-          ) : (
-            <HashPanel key={tool.id} tool={tool} />
-          )}
+          <div key={`${activeTool}-panel`} className="animate-rise">
+            {activeTool === "image" ? (
+              <ImagePanel key={tool.id} tool={tool} />
+            ) : activeTool === "pdf" ? (
+              <PdfPanel key={tool.id} tool={tool} />
+            ) : activeTool === "video" ? (
+              <VideoPanel key={tool.id} tool={tool} />
+            ) : (
+              <HashPanel key={tool.id} tool={tool} />
+            )}
+          </div>
         </Reveal>
 
         <ValueProposition />

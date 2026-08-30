@@ -301,6 +301,7 @@ export function PdfPanel({ tool }: { tool: Tool }) {
           <span
             className={[
               "flex h-12 w-12 items-center justify-center rounded-full transition-colors duration-200 ease-out",
+              !isDragOver && "animate-float",
               isDragOver ? "bg-accent/10 text-accent" : "bg-paper-2 text-muted",
             ].join(" ")}
           >
@@ -405,7 +406,7 @@ export function PdfPanel({ tool }: { tool: Tool }) {
           </div>
           <div className="h-1.5 w-full overflow-hidden rounded-full bg-paper-3">
             <div
-              className="h-full rounded-full bg-accent transition-[width] duration-200 ease-out"
+              className="animate-shimmer h-full rounded-full bg-accent transition-[width] duration-200 ease-out"
               style={{ width: `${progress.value}%` }}
             />
           </div>
