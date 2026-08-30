@@ -1,45 +1,97 @@
 "use client";
 
-import { useRef, useState, type ReactNode } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Info, Lock, X } from "lucide-react";
 
 const HOW_IT_WORKS =
   "How it works: All processing runs client-side in your browser's WebAssembly & Web Worker threads. No telemetry, no cloud storage. Open your browser's Network Tab (F12) to verify zero network requests.";
 
-function Dialog({ open, onClose, children }: { open: boolean; onClose: () => void; children: ReactNode }) {
-  if (!open) return null;
+function OfflinePopover({
+  open,
+  onClose,
+  triggerRef,
+  children,
+}: {
+  open: boolean;
+  onClose: () => void;
+  triggerRef: React.RefObject<HTMLButtonElement | null>;
+  children: React.ReactNode;
+}) {
+  const panelRef = useRef<HTMLDivElement>(null);
+  const [pos, setPos] = useState<{ right: number; top: number } | null>(null);
+
+  /* anchor to the trigger badge (right-aligned, below it) */
+  useEffect(() => {
+    if (!open) return;
+    const el = triggerRef.current;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    setPos({ right: window.innerWidth - rect.right, top: rect.bottom + 8 });
+  }, [open, triggerRef]);
+
+  /* close on outside (click) click */
+  useEffect(() => {
+    if (!open) return;
+    function onPointerDown(e: MouseEvent | TouchEvent) {
+      const t = e.target as Node;
+      if (panelRef.current?.contains(t)) return;
+      if (triggerRef.current?.contains(t)) return;
+      onClose();
+    }
+    document.addEventListener("mousedown", onPointerDown);
+    document.addEventListener("touchstart", onPointerDown);
+    return () => {
+      document.removeEventListener("mousedown", onPointerDown);
+      document.removeEventListener("touchstart", onPointerDown);
+    };
+  }, [open, onClose, triggerRef]);
+
+  /* close on Escape */
+  useEffect(() => {
+    if (!open) return;
+    function onKey(e: KeyboardEvent) {
+      if (e.key === "Escape") onClose();
+    }
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, [open, onClose]);
+
+  if (!open || !pos) return null;
+
   return (
     <div
-      className="fixed inset-0 z-modal flex items-center justify-center p-4"
+      ref={panelRef}
       role="dialog"
-      aria-modal="true"
+      aria-modal="false"
       aria-label="How Localism works"
+      className="animate-pop fixed z-50 w-80 rounded-xl border border-zinc-800 bg-zinc-900 p-4 text-xs leading-relaxed text-zinc-300 shadow-2xl"
+      style={{
+        right: pos.right,
+        top: pos.top,
+        maxWidth: "calc(100vw - 1.5rem)",
+      }}
     >
       <button
         type="button"
-        aria-label="Close"
         onClick={onClose}
-        className="absolute inset-0 bg-black/60 animate-pulse-soft"
-      />
-      <div className="animate-pop relative w-full max-w-md rounded-2xl border border-rule-2 bg-panel-2 p-5 shadow-2xl">
-        <button
-          type="button"
-          onClick={onClose}
-          aria-label="Close dialog"
-          className="absolute right-3 top-3 rounded-full p-1.5 text-muted transition-colors hover:bg-paper-3 hover:text-ink-2"
-        >
-          <X className="h-4 w-4" strokeWidth={1.75} />
-        </button>
-        <div className="flex items-start gap-3">
-          <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-accent/10">
-            <Lock aria-hidden="true" className="h-4.5 w-4.5 text-accent" strokeWidth={1.75} />
-          </span>
-          <div>
-            <h2 className="text-sm font-semibold text-ink">
-              100% Offline · Local Processing
-            </h2>
-            <p className="mt-2 text-xs leading-relaxed text-muted">{children}</p>
-          </div>
+        aria-label="Close"
+        className="absolute right-2.5 top-2.5 rounded-full p-1 text-zinc-500 transition-colors hover:bg-zinc-800 hover:text-zinc-200"
+      >
+        <X className="h-3.5 w-3.5" strokeWidth={1.75} />
+      </button>
+      <div className="flex items-start gap-2.5 pr-5">
+        <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-accent/10">
+          <Lock
+            aria-hidden="true"
+            className="h-3.5 w-3.5 text-accent"
+            strokeWidth={1.75}
+          />
+        </span>
+        <div>
+          <h2 className="text-xs font-semibold text-zinc-100">
+            100% Offline · Local Processing
+          </h2>
+          <p className="mt-1.5 text-zinc-400">{children}</p>
         </div>
       </div>
     </div>
@@ -51,7 +103,7 @@ export function SiteHeader() {
   const badgeRef = useRef<HTMLButtonElement>(null);
 
   return (
-    <header className="border-b border-rule bg-paper">
+    <header className="relative border-b border-rule bg-paper">
       <div className="mx-auto flex w-full max-w-[72rem] flex-wrap items-center justify-between gap-x-4 gap-y-2 px-4 py-3 sm:px-6">
         <a
           href="#"
@@ -68,12 +120,15 @@ export function SiteHeader() {
         <button
           ref={badgeRef}
           type="button"
-          onClick={() => setOpen(true)}
+          onClick={() => setOpen((v) => !v)}
           aria-haspopup="dialog"
           aria-expanded={open}
           className="hover-lift flex cursor-pointer items-center gap-2 rounded-full border border-rule bg-paper-2 px-3 py-1.5 transition-colors duration-200 ease-out hover:border-rule-2 hover:bg-panel-2"
         >
-          <span aria-hidden="true" className="animate-glow relative flex h-2 w-2">
+          <span
+            aria-hidden="true"
+            className="animate-glow relative flex h-2 w-2"
+          >
             <span className="absolute inline-flex h-full w-full rounded-full bg-ok opacity-60" />
             <span className="status-dot relative inline-flex h-2 w-2 rounded-full bg-ok" />
           </span>
@@ -93,9 +148,13 @@ export function SiteHeader() {
         </button>
       </div>
 
-      <Dialog open={open} onClose={() => setOpen(false)}>
+      <OfflinePopover
+        open={open}
+        onClose={() => setOpen(false)}
+        triggerRef={badgeRef}
+      >
         {HOW_IT_WORKS}
-      </Dialog>
+      </OfflinePopover>
     </header>
   );
 }
