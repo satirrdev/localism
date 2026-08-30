@@ -13,6 +13,7 @@
     "@ffmpeg/core": "^0.12.10",
     "@ffmpeg/ffmpeg": "^0.12.15",
     "@ffmpeg/util": "^0.12.2",
+    "@imgly/background-removal": "^1.7.0",
     "js-sha1": "^0.7.0",
     "js-sha256": "^1.0.0",
     "js-sha512": "^0.9.0",

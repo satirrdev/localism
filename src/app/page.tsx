@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { BgRemovePanel } from "@/components/bg-remove-panel";
 import { HashPanel } from "@/components/hash-panel";
 import { ImagePanel } from "@/components/image-panel";
 import { PdfPanel } from "@/components/pdf-panel";
@@ -50,6 +51,8 @@ export default function Home() {
               <VideoPanel key={tool.id} tool={tool} />
             ) : activeTool === "watermark" ? (
               <WatermarkPanel key={tool.id} tool={tool} />
+            ) : activeTool === "bgremove" ? (
+              <BgRemovePanel key={tool.id} tool={tool} />
             ) : (
               <HashPanel key={tool.id} tool={tool} />
             )}

@@ -4,13 +4,20 @@ import {
   Fingerprint,
   Image as ImageIcon,
   FileText,
+  ScanEye,
   Stamp,
   Video,
   type LucideIcon,
 } from "lucide-react";
 import { useCallback, useRef } from "react";
 
-export type ToolId = "image" | "pdf" | "video" | "hash" | "watermark";
+export type ToolId =
+  | "image"
+  | "pdf"
+  | "video"
+  | "hash"
+  | "watermark"
+  | "bgremove";
 
 export interface Tool {
   id: ToolId;
@@ -66,6 +73,15 @@ export const TOOLS: Tool[] = [
     accept: "image/jpeg,image/png,image/webp,.jpg,.jpeg,.png,.webp",
     heading: "Watermark & redact documents",
     lede: "Stamp a watermark over IDs, KTPs, passports, or invoices and censor sensitive fields. All rendered locally via Canvas — nothing is uploaded.",
+    hint: "JPG, PNG, WebP",
+  },
+  {
+    id: "bgremove",
+    label: "BG Remove",
+    icon: ScanEye,
+    accept: "image/jpeg,image/png,image/webp,.jpg,.jpeg,.png,.webp",
+    heading: "AI background removal",
+    lede: "Erase the background of any photo with an in-browser ONNX AI model. Running fully locally via WebAssembly — no upload, no account.",
     hint: "JPG, PNG, WebP",
   },
 ];
