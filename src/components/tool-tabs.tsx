@@ -4,12 +4,13 @@ import {
   Fingerprint,
   Image as ImageIcon,
   FileText,
+  Stamp,
   Video,
   type LucideIcon,
 } from "lucide-react";
 import { useCallback, useRef } from "react";
 
-export type ToolId = "image" | "pdf" | "video" | "hash";
+export type ToolId = "image" | "pdf" | "video" | "hash" | "watermark";
 
 export interface Tool {
   id: ToolId;
@@ -57,6 +58,15 @@ export const TOOLS: Tool[] = [
     heading: "Verify file integrity",
     lede: "Compute SHA-256, SHA-1, SHA-512, and MD5 from a streamed read in a Web Worker. Handles huge files without breaking a sweat — nothing is uploaded.",
     hint: "Any file",
+  },
+  {
+    id: "watermark",
+    label: "Watermark",
+    icon: Stamp,
+    accept: "image/jpeg,image/png,image/webp,.jpg,.jpeg,.png,.webp",
+    heading: "Watermark & redact documents",
+    lede: "Stamp a watermark over IDs, KTPs, passports, or invoices and censor sensitive fields. All rendered locally via Canvas — nothing is uploaded.",
+    hint: "JPG, PNG, WebP",
   },
 ];
 

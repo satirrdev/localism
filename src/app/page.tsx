@@ -5,6 +5,7 @@ import { HashPanel } from "@/components/hash-panel";
 import { ImagePanel } from "@/components/image-panel";
 import { PdfPanel } from "@/components/pdf-panel";
 import { VideoPanel } from "@/components/video-panel";
+import { WatermarkPanel } from "@/components/watermark-panel";
 import { Reveal } from "@/components/reveal";
 import { SiteHeader } from "@/components/site-header";
 import { ToolTabs, TOOLS, type ToolId } from "@/components/tool-tabs";
@@ -47,6 +48,8 @@ export default function Home() {
               <PdfPanel key={tool.id} tool={tool} />
             ) : activeTool === "video" ? (
               <VideoPanel key={tool.id} tool={tool} />
+            ) : activeTool === "watermark" ? (
+              <WatermarkPanel key={tool.id} tool={tool} />
             ) : (
               <HashPanel key={tool.id} tool={tool} />
             )}
