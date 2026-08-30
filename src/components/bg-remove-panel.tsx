@@ -140,9 +140,11 @@ export function BgRemovePanel({ tool }: { tool: Tool }) {
         const { removeBackground, preload } = mod;
 
         /* preload model so subsequent runs are instant */
+        const base = `${window.location.origin}/bgremove/`;
+
         if (!modelReady) {
           await preload({
-            publicPath: "/bgremove/",
+            publicPath: base,
             device: "gpu",
             progress: (key, current, total) => {
               setProgress({ key, current, total });
@@ -155,7 +157,7 @@ export function BgRemovePanel({ tool }: { tool: Tool }) {
         setProgress({ key: "compute", current: 0, total: 1 });
 
         const blob = await removeBackground(target, {
-          publicPath: "/bgremove/",
+          publicPath: base,
           device: "gpu",
           progress: (key, current, total) => {
             setProgress({ key, current, total });
