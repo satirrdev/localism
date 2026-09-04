@@ -23,6 +23,19 @@ import type { Tool } from "./tool-tabs";
 
 type Backdrop = "transparent" | "white" | "black" | "custom";
 
+type ModelLevel = "low" | "medium" | "high";
+
+type ImglyModel = "isnet" | "isnet_fp16" | "isnet_quint8";
+
+const MODEL_MAP: Record<
+  ModelLevel,
+  { key: ImglyModel; label: string; size: string }
+> = {
+  low: { key: "isnet_quint8", label: "Low", size: "42MB" },
+  medium: { key: "isnet_fp16", label: "Medium", size: "84MB" },
+  high: { key: "isnet", label: "High", size: "168MB" },
+};
+
 interface StageProgress {
   key: string;
   current: number;
@@ -48,8 +61,13 @@ export function BgRemovePanel({ tool }: { tool: Tool }) {
     "idle" | "downloading" | "processing" | "done" | "error"
   >("idle");
   const [progress, setProgress] = useState<StageProgress | null>(null);
-  const [modelReady, setModelReady] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  /* ── model quality ──────────────────── */
+  const [modelLevel, setModelLevel] = useState<ModelLevel>("low");
+  const [downloadedLevels, setDownloadedLevels] = useState<Set<ModelLevel>>(
+    () => new Set(["low"]),
+  );
 
   /* ── post-processing ────────────────── */
   const [backdrop, setBackdrop] = useState<Backdrop>("transparent");
@@ -141,17 +159,18 @@ export function BgRemovePanel({ tool }: { tool: Tool }) {
 
         /* preload model so subsequent runs are instant */
         const base = `${window.location.origin}/bgremove/`;
+        const modelKey = MODEL_MAP[modelLevel].key;
 
-        if (!modelReady) {
+        if (!downloadedLevels.has(modelLevel)) {
           await preload({
             publicPath: base,
             device: "gpu",
-            model: "small",
+            model: modelKey,
             progress: (key, current, total) => {
               setProgress({ key, current, total });
             },
           });
-          setModelReady(true);
+          setDownloadedLevels((prev) => new Set(prev).add(modelLevel));
         }
 
         setStatus("processing");
@@ -160,7 +179,7 @@ export function BgRemovePanel({ tool }: { tool: Tool }) {
         const blob = await removeBackground(target, {
           publicPath: base,
           device: "gpu",
-          model: "small",
+          model: modelKey,
           progress: (key, current, total) => {
             setProgress({ key, current, total });
           },
@@ -188,7 +207,7 @@ export function BgRemovePanel({ tool }: { tool: Tool }) {
         );
       }
     },
-    [modelReady, backdrop, applyBackdrop],
+    [modelLevel, downloadedLevels, backdrop, applyBackdrop],
   );
 
   /* ── file staging ───────────────────── */
@@ -391,15 +410,51 @@ export function BgRemovePanel({ tool }: { tool: Tool }) {
       {/* ── helper note ───────────────────────────── */}
       <p className="mt-3 flex items-center gap-2 rounded-xl border border-rule bg-paper-2 px-3 py-2 text-xs leading-relaxed text-muted animate-pop">
         <span className="text-accent">⚡</span>
-        Powered by OIEL — in-browser ONNX AI. First run may take a few seconds
-        to load the model locally.
-        {modelReady && (
-          <span className="ml-auto flex items-center gap-1 rounded-full bg-ok/15 px-2 py-0.5 font-mono text-[0.625rem] font-semibold text-ok">
-            <Check aria-hidden="true" className="h-3 w-3" strokeWidth={2} />
-            model cached
+        Powered by OIEL — in-browser ONNX AI. Higher quality models download on
+        first use and are cached by your browser.
+        {MODEL_MAP[modelLevel] &&
+          downloadedLevels.has(modelLevel) && (
+            <span className="ml-auto flex items-center gap-1 rounded-full bg-ok/15 px-2 py-0.5 font-mono text-[0.625rem] font-semibold text-ok">
+              <Check aria-hidden="true" className="h-3 w-3" strokeWidth={2} />
+            {MODEL_MAP[modelLevel].label} cached
           </span>
-        )}
+          )}
       </p>
+
+      {/* ── Model quality selector ───────────────── */}
+      <div className="mt-3 flex flex-wrap items-center gap-2">
+        <span className="font-mono text-[0.625rem] uppercase tracking-[0.08em] text-muted">
+          Model
+        </span>
+        {(Object.keys(MODEL_MAP) as ModelLevel[]).map((lvl) => (
+          <button
+            key={lvl}
+            type="button"
+            onClick={() => setModelLevel(lvl)}
+            disabled={processing}
+            className={[
+              "rounded-full px-3 py-1.5 text-xs font-medium transition-colors",
+              modelLevel === lvl
+                ? "bg-accent text-accent-ink"
+                : "bg-paper-2 text-muted hover:text-ink-2",
+            ].join(" ")}
+          >
+            {MODEL_MAP[lvl].label}
+            {downloadedLevels.has(lvl) ? (
+              <span className="ml-1.5 font-mono text-[0.625rem] text-ok/80">✓</span>
+            ) : (
+              <span className="ml-1.5 font-mono text-[0.625rem] text-muted/60">
+                {MODEL_MAP[lvl].size}
+              </span>
+            )}
+          </button>
+        ))}
+        <span className="text-xs text-muted">
+          {downloadedLevels.has(modelLevel)
+            ? `${MODEL_MAP[modelLevel].label} ready`
+            : `${MODEL_MAP[modelLevel].size} will download on use`}
+        </span>
+      </div>
 
       {/* ── Staged file ───────────────────────────── */}
       {file && (
@@ -456,7 +511,7 @@ export function BgRemovePanel({ tool }: { tool: Tool }) {
                         />
                         <span className="text-xs text-muted">
                           {status === "downloading"
-                            ? "Loading AI model…"
+                            ? `Downloading ${MODEL_MAP[modelLevel].label} model…`
                             : "Removing background…"}
                         </span>
                       </>
@@ -482,7 +537,7 @@ export function BgRemovePanel({ tool }: { tool: Tool }) {
                 <span className="flex items-center gap-1.5 text-xs text-muted">
                   {isDownloading && <Loader2 aria-hidden="true" className="h-3 w-3 animate-spin" />}
                   {isDownloading
-                    ? "Loading AI Model (cached after first run)…"
+                    ? `Downloading ${MODEL_MAP[modelLevel].label} model${progress && progress.key?.startsWith("fetch:") ? ` · ${MODEL_MAP[modelLevel].size}` : ""}…`
                     : "Extracting subject & removing background…"}
                 </span>
                 <span className="font-mono text-[0.625rem] text-muted">{stagePct}%</span>
