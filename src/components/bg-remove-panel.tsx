@@ -146,6 +146,7 @@ export function BgRemovePanel({ tool }: { tool: Tool }) {
           await preload({
             publicPath: base,
             device: "gpu",
+            model: "small",
             progress: (key, current, total) => {
               setProgress({ key, current, total });
             },
@@ -159,6 +160,7 @@ export function BgRemovePanel({ tool }: { tool: Tool }) {
         const blob = await removeBackground(target, {
           publicPath: base,
           device: "gpu",
+          model: "small",
           progress: (key, current, total) => {
             setProgress({ key, current, total });
           },
