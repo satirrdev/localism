@@ -269,7 +269,7 @@ export function ImagePanel({ tool }: { tool: Tool }) {
       id={`panel-${tool.id}`}
       role="tabpanel"
       aria-labelledby={`tab-${tool.id}`}
-      className="mx-auto w-full max-w-[72rem] px-4 pb-16 sm:px-6 sm:pb-24"
+      className="mx-auto w-full max-w-5xl px-4 pb-16 sm:px-6 sm:pb-24"
     >
       {/* ── Dropzone ─────────────────────────────────── */}
       <label

@@ -1,39 +1,38 @@
-/* Hallmark · macrostructure: Workbench · genre: modern-minimal · theme: Cobalt (dark/zinc) · enrichment: none
- * nav: app-shell header · footer: Ft2 Inline single line
- * pre-emit critique: P5 H5 E5 S5 R4 V5
- * axes: paper=dark (zinc-950 · L13% hue 260) · display=grotesk-sans (Geist) · accent=cool blue oklch(74% 0.14 256)
- * contrast: pass (40–41) · nav: header · footer: Ft2 · slop: pass (42–45) · mobile: pass (34, 49, 50–57)
+/* Hallmark · macrostructure: Workbench · genre: modern-minimal · theme: Raycast (dark/zinc · emerald signal) · enrichment: none
+ * nav: app-shell header · footer: trust (GitHub audit)
+ * axes: paper=zinc-950 #050505 · display=grotesk-sans (Geist) · accent=emerald oklch(69.6% 0.17 162.5)
+ * contrast: pass · mobile: pass
  */
 
 /* Tailwind v4 emits these as :root custom properties AND generates bg-/text-/border- utilities */
 @theme {
-  /* -- Paper · zinc-950 ground, never pure #000 */
-  --color-paper: oklch(13% 0.005 260);
-  --color-paper-2: oklch(17% 0.006 260);
-  --color-paper-3: oklch(21% 0.006 260);
+  /* -- Paper · #050505 ground, never pure #000 */
+  --color-paper: #050505;
+  --color-paper-2: #0d0e11;
+  --color-paper-3: #14161b;
 
   /* -- Rules / hairlines · zinc-800 / zinc-700 */
-  --color-rule: oklch(27% 0.008 260);
-  --color-rule-2: oklch(34% 0.008 260);
+  --color-rule: oklch(27.8% 0.03 256);
+  --color-rule-2: oklch(32.4% 0.03 256);
 
   /* -- Ink · zinc-100/200, never pure #fff */
-  --color-ink: oklch(96% 0.004 260);
-  --color-ink-2: oklch(90% 0.005 260);
-  --color-muted: oklch(71% 0.006 260);
-  --color-neutral: oklch(56% 0.006 260);
+  --color-ink: #fafafa;
+  --color-ink-2: oklch(92% 0.01 256);
+  --color-muted: #a1a1aa;
+  --color-neutral: #71717a;
 
-  /* -- The one cobalt signal (lightened for dark ground) */
-  --color-accent: oklch(74% 0.14 256);
-  --color-accent-ink: oklch(13% 0.01 260);
-  --color-focus: oklch(74% 0.14 256);
+  /* -- The one emerald signal (Raycast security register) */
+  --color-accent: oklch(69.6% 0.17 162.5);
+  --color-accent-ink: oklch(14% 0.02 160);
+  --color-focus: oklch(69.6% 0.17 162.5);
 
-  /* -- Panel · zinc-900/50 blend for the dropzone surface */
-  --color-panel: oklch(15% 0.006 260);
-  --color-panel-2: oklch(20% 0.008 260);
+  /* -- Panel · zinc-900 surfaces for dropzone / cards */
+  --color-panel: #0d0e11;
+  --color-panel-2: #14161b;
 
-  /* -- Status */
-  --color-ok: oklch(74% 0.14 155);
-  --color-error: oklch(65% 0.17 25);
+  /* -- Status · emerald success / rose error */
+  --color-ok: oklch(69.6% 0.17 162.5);
+  --color-error: oklch(64.5% 0.246 25.9);
 
   /* -- Radius · sleek, large for the dark register */
   --radius-sm: 0.75rem;

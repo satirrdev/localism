@@ -104,7 +104,7 @@ export function SiteHeader() {
 
   return (
     <header className="relative border-b border-rule bg-paper">
-      <div className="mx-auto flex w-full max-w-[72rem] flex-wrap items-center justify-between gap-x-4 gap-y-2 px-4 py-3 sm:px-6">
+      <div className="mx-auto flex w-full max-w-5xl flex-wrap items-center justify-between gap-x-4 gap-y-2 px-4 py-3 sm:px-6">
         <a
           href="#"
           aria-label="Localism home"
@@ -123,7 +123,7 @@ export function SiteHeader() {
           onClick={() => setOpen((v) => !v)}
           aria-haspopup="dialog"
           aria-expanded={open}
-          className="hover-lift flex cursor-pointer items-center gap-2 rounded-full border border-rule bg-paper-2 px-3 py-1.5 transition-colors duration-200 ease-out hover:border-rule-2 hover:bg-panel-2"
+          className="flex cursor-pointer items-center gap-2 rounded-full border border-rule bg-paper-3 px-3 py-1 transition-colors duration-200 ease-out hover:border-rule-2 hover:bg-panel-2"
         >
           <span
             aria-hidden="true"

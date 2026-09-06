@@ -213,7 +213,7 @@ export function PdfPanel({ tool }: { tool: Tool }) {
       id={`panel-${tool.id}`}
       role="tabpanel"
       aria-labelledby={`tab-${tool.id}`}
-      className="mx-auto w-full max-w-[72rem] px-4 pb-16 sm:px-6 sm:pb-24"
+      className="mx-auto w-full max-w-5xl px-4 pb-16 sm:px-6 sm:pb-24"
     >
       {/* Mode toggle */}
       <div className="mb-3 flex items-center gap-2">
@@ -330,7 +330,7 @@ export function PdfPanel({ tool }: { tool: Tool }) {
 
       {/* File list */}
       {files.length > 0 && (
-        <ul className="mx-auto mt-4 max-w-[72rem] space-y-2">
+        <ul className="mx-auto mt-4 max-w-5xl space-y-2">
           {files.map((staged, i) => (
             <li
               key={staged.id}
@@ -457,7 +457,7 @@ export function PdfPanel({ tool }: { tool: Tool }) {
 
       {/* Rejected */}
       {rejected.length > 0 && (
-        <ul className="mx-auto mt-4 max-w-[72rem] space-y-2" role="alert">
+        <ul className="mx-auto mt-4 max-w-5xl space-y-2" role="alert">
           {rejected.map((name, i) => (
             <li
               key={`${name}-${i}`}

@@ -28,6 +28,19 @@ body {
   font-weight: 400;
 }
 
+/* Ambient hero glow — emerald radial wash at top center (design-structure/01) */
+.hero-glow {
+  position: absolute;
+  top: -12rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 44rem;
+  height: 26rem;
+  max-width: 92vw;
+  pointer-events: none;
+  background: radial-gradient(closest-side, rgba(16, 185, 129, 0.1), transparent 70%);
+}
+
 /* Focus rings — instant, never animated (interaction-and-states.md) */
 :focus-visible {
   outline: 2px solid var(--color-focus);
