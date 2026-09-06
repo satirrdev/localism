@@ -1,4 +1,4 @@
-/* hash-worker.js — streaming chunked file hashing in a Web Worker.
+/* hash-worker.js, streaming chunked file hashing in a Web Worker.
  * SHA-256/1/512 via js-sha* (incremental), MD5 via SparkMD5 (incremental).
  * Reads the File in 8 MB slices so even 10 GB+ files never blow up memory. */
 

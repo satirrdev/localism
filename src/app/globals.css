@@ -1,7 +1,7 @@
 @import "tailwindcss";
 @import "../../tokens.css";
 
-/* Fonts — next/font vars (different names → no self-reference) */
+/* Fonts, next/font vars (different names → no self-reference) */
 @theme inline {
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
@@ -28,7 +28,7 @@ body {
   font-weight: 400;
 }
 
-/* Ambient hero glow — emerald radial wash at top center (design-structure/01) */
+/* Ambient hero glow, emerald radial wash at top center (design-structure/01) */
 .hero-glow {
   position: absolute;
   top: -12rem;
@@ -41,7 +41,7 @@ body {
   background: radial-gradient(closest-side, rgba(16, 185, 129, 0.1), transparent 70%);
 }
 
-/* Focus rings — instant, never animated (interaction-and-states.md) */
+/* Focus rings, instant, never animated (interaction-and-states.md) */
 :focus-visible {
   outline: 2px solid var(--color-focus);
   outline-offset: 2px;
@@ -53,7 +53,7 @@ body {
   color: var(--color-accent-ink);
 }
 
-/* Cobalt reveal engine — one orchestrated entrance, IntersectionObserver */
+/* Cobalt reveal engine, one orchestrated entrance, IntersectionObserver */
 .reveal {
   opacity: 0;
   transform: translateY(10px);
@@ -200,7 +200,7 @@ body {
   animation: pulse-soft 1.6s var(--ease-in-out) infinite;
 }
 
-/* Stagger helper — apply .stagger > * with increasing delay */
+/* Stagger helper, apply .stagger > * with increasing delay */
 @keyframes rise-in {
   0% {
     opacity: 0;

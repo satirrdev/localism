@@ -153,7 +153,7 @@ export function BgRemovePanel({ tool }: { tool: Tool }) {
       setStatus("downloading");
       setProgress({ key: "model", current: 0, total: 1 });
       try {
-        /* dynamic import — never executed during SSR */
+        /* dynamic import, never executed during SSR */
         const mod = await import("@imgly/background-removal");
         const { removeBackground, preload } = mod;
 
@@ -410,7 +410,7 @@ export function BgRemovePanel({ tool }: { tool: Tool }) {
       {/* ── helper note ───────────────────────────── */}
       <p className="mt-3 flex items-center gap-2 rounded-xl border border-rule bg-paper-2 px-3 py-2 text-xs leading-relaxed text-muted animate-pop">
         <span className="text-accent">⚡</span>
-        Powered by OIEL — in-browser ONNX AI. Higher quality models download on
+        Powered by OIEL, in-browser ONNX AI. Higher quality models download on
         first use and are cached by your browser.
         {MODEL_MAP[modelLevel] &&
           downloadedLevels.has(modelLevel) && (

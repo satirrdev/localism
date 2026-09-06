@@ -52,7 +52,7 @@ Your file → Browser memory → Web Worker / WASM → Processed file → Downlo
 ```
 src/
   app/
-    page.tsx              # Main page — tool tabs + panels
+    page.tsx              # Main page, tool tabs + panels
   components/
     site-header.tsx       # Top bar with offline badge
     tool-tabs.tsx         # Tab bar with keyboard navigation
@@ -73,8 +73,8 @@ public/
 - No analytics, no tracking
 - No accounts or authentication
 - Works fully offline
-- Inspect your browser's Network tab — you'll see nothing
+- Inspect your browser's Network tab, you'll see nothing
 
 ## License
 
-[AGPL-3.0](LICENSE) — GNU Affero General Public License v3.0
+[AGPL-3.0](LICENSE), GNU Affero General Public License v3.0

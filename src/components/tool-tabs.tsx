@@ -63,7 +63,7 @@ export const TOOLS: Tool[] = [
     icon: Fingerprint,
     accept: "",
     heading: "Verify file integrity",
-    lede: "Compute SHA-256, SHA-1, SHA-512, and MD5 from a streamed read in a Web Worker. Handles huge files without breaking a sweat — nothing is uploaded.",
+    lede: "Compute SHA-256, SHA-1, SHA-512, and MD5 from a streamed read in a Web Worker. Handles huge files without breaking a sweat, nothing is uploaded.",
     hint: "Any file",
   },
   {
@@ -72,7 +72,7 @@ export const TOOLS: Tool[] = [
     icon: Stamp,
     accept: "image/jpeg,image/png,image/webp,.jpg,.jpeg,.png,.webp",
     heading: "Watermark & redact documents",
-    lede: "Stamp a watermark over IDs, KTPs, passports, or invoices and censor sensitive fields. All rendered locally via Canvas — nothing is uploaded.",
+    lede: "Stamp a watermark over IDs, KTPs, passports, or invoices and censor sensitive fields. All rendered locally via Canvas, nothing is uploaded.",
     hint: "JPG, PNG, WebP",
   },
   {
@@ -81,7 +81,7 @@ export const TOOLS: Tool[] = [
     icon: ScanEye,
     accept: "image/jpeg,image/png,image/webp,.jpg,.jpeg,.png,.webp",
     heading: "AI background removal",
-    lede: "Erase the background of any photo with an in-browser ONNX AI model. Running fully locally via WebAssembly — no upload, no account.",
+    lede: "Erase the background of any photo with an in-browser ONNX AI model. Running fully locally via WebAssembly, no upload, no account.",
     hint: "JPG, PNG, WebP",
   },
 ];

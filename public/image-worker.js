@@ -1,4 +1,4 @@
-/* image-worker.js — OffscreenCanvas-based image processing in a Web Worker */
+/* image-worker.js, OffscreenCanvas-based image processing in a Web Worker */
 
 function post(type, payload) {
   self.postMessage({ type, ...payload });

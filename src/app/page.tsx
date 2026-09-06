@@ -34,7 +34,7 @@ export default function Home() {
               Your files, processed on this device.
             </h1>
             <p className="mt-4 max-w-[52ch] text-sm leading-relaxed text-muted sm:text-base">
-              Pick a tool, drop a file. Everything runs in your browser — no
+              Pick a tool, drop a file. Everything runs in your browser, no
               upload, no server, no account.
             </p>
           </div>
@@ -66,7 +66,7 @@ export default function Home() {
       <footer className="border-t border-rule">
         <div className="mx-auto flex w-full max-w-5xl flex-wrap items-center justify-between gap-3 px-4 py-6 sm:px-6">
           <p className="font-mono text-xs text-muted">
-            localism — a privacy-first utility suite · AGPL-3.0
+            localism, a privacy-first utility suite · AGPL-3.0
           </p>
           <a
             href="https://github.com/satirrdev/localism"

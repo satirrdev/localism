@@ -285,7 +285,7 @@ export function PdfPanel({ tool }: { tool: Tool }) {
             </span>
             <span className="mt-0.5 block text-xs leading-relaxed text-muted">
               {mode === "merge"
-                ? "Drop two or more PDFs to merge them into one. pdf-lib runs entirely in a Web Worker — no upload, no server."
+                ? "Drop two or more PDFs to merge them into one. pdf-lib runs entirely in a Web Worker, no upload, no server."
                 : "Drop one PDF. Pages are processed in-browser; nothing leaves your device."}
             </span>
           </span>
@@ -361,7 +361,7 @@ export function PdfPanel({ tool }: { tool: Tool }) {
       {mode === "redact" && files.length === 1 && (
         <div className="mt-4">
           <label htmlFor="redact-terms" className="mb-1.5 block text-xs text-muted">
-            Terms to redact (comma-separated) — leave blank to mark all pages
+            Terms to redact (comma-separated), leave blank to mark all pages
           </label>
           <input
             id="redact-terms"

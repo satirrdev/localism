@@ -179,7 +179,7 @@ export function VideoPanel({ tool }: { tool: Tool }) {
     };
   }, []);
 
-  /* elapsed timer — ticks every second while processing */
+  /* elapsed timer, ticks every second while processing */
   useEffect(() => {
     if (!progress) return;
     const id = setInterval(() => setNow(Date.now()), 1000);

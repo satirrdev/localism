@@ -24,7 +24,7 @@ export function ValueProposition() {
             <p className="mt-3 max-w-[58ch] text-sm leading-relaxed text-muted sm:text-base">
               Cloud tools hold your files hostage and charge you for their
               server costs. Localism turns your own browser into a
-              high-performance engine — completely offline, private, and
+              high-performance engine, completely offline, private, and
               unlimited.
             </p>
           </div>
@@ -89,7 +89,7 @@ export function ValueProposition() {
                 </h3>
                 <p className="mt-2 text-sm leading-relaxed text-muted">
                   Cloud SaaS charges subscriptions because they pay for
-                  servers. Your device does the work — Localism is free.
+                  servers. Your device does the work, Localism is free.
                 </p>
               </div>
               <p className="font-mono text-xs uppercase tracking-[0.12em] text-neutral">

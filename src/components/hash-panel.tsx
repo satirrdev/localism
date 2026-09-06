@@ -220,7 +220,7 @@ export function HashPanel({ tool }: { tool: Tool }) {
     try {
       await navigator.clipboard.writeText(value);
     } catch {
-      /* clipboard unavailable — silently ignore */
+      /* clipboard unavailable, silently ignore */
     }
     setCopied(algo);
     if (copyTimer.current) clearTimeout(copyTimer.current);
