@@ -64,16 +64,23 @@ export function FAQ() {
                       strokeWidth={1.75}
                     />
                   </button>
-                  {isOpen && (
-                    <p
-                      id={`faq-panel-${i}`}
-                      role="region"
-                      aria-labelledby={`faq-trigger-${i}`}
-                      className="pt-2 text-sm leading-relaxed text-muted"
-                    >
-                      {item.a}
-                    </p>
-                  )}
+                  <div
+                    id={`faq-panel-${i}`}
+                    role="region"
+                    aria-labelledby={`faq-trigger-${i}`}
+                    className={[
+                      "grid transition-[grid-template-rows] duration-200 ease-out",
+                      isOpen
+                        ? "[grid-template-rows:1fr]"
+                        : "[grid-template-rows:0fr]",
+                    ].join(" ")}
+                  >
+                    <div className="min-h-0 overflow-hidden">
+                      <p className="pt-2 text-sm leading-relaxed text-muted">
+                        {item.a}
+                      </p>
+                    </div>
+                  </div>
                 </div>
               );
             })}
