@@ -254,9 +254,9 @@ export function PdfPanel({ tool }: { tool: Tool }) {
         onDrop={onDrop}
         className={[
           "flex cursor-pointer flex-col overflow-hidden rounded-2xl",
-          "border-2 border-dashed transition-colors duration-200 ease-out",
+          "border-2 border-dashed transition-[transform,border-color,background-color] duration-200 ease-out",
           isDragOver
-            ? "border-accent bg-panel-2"
+            ? "border-accent scale-[1.008] animate-glow"
             : "border-rule-2 bg-panel hover:border-muted",
         ].join(" ")}
       >
@@ -417,7 +417,7 @@ export function PdfPanel({ tool }: { tool: Tool }) {
       {resultUrl && (
         <div className="mt-4 flex items-center gap-3 rounded-xl border border-ok/30 bg-paper-2 px-3 py-2.5">
           <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-ok/10">
-            <Check aria-hidden="true" className="h-4 w-4 text-ok" strokeWidth={2} />
+            <Check aria-hidden="true" className="check-bounce h-4 w-4 text-ok" strokeWidth={2} />
           </span>
           <div className="min-w-0 flex-1">
             <p className="text-sm font-medium text-ink">

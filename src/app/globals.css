@@ -152,6 +152,25 @@ body {
   animation: pop-in var(--dur-short) var(--ease-out) both;
 }
 
+/* Crisp checkmark scale-in bounce for success states (150ms, from 0) */
+@keyframes check-bounce {
+  0% {
+    opacity: 0;
+    transform: scale(0);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+.check-bounce {
+  animation: check-bounce 150ms var(--ease-out) both;
+}
+
 /* Slow page-in for hero + tabs */
 @keyframes rise-in {
   0% {
@@ -237,7 +256,7 @@ body {
     box-shadow var(--dur-short) var(--ease-out);
 }
 .hover-lift:hover {
-  transform: translateY(-3px);
+  transform: translateY(-2px);
   box-shadow:
     0 8px 24px -12px color-mix(in oklab, var(--color-accent) 45%, transparent),
     0 2px 8px -4px rgba(0, 0, 0, 0.5);

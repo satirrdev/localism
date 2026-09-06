@@ -331,9 +331,9 @@ export function BgRemovePanel({ tool }: { tool: Tool }) {
         onDrop={onDrop}
         className={[
           "flex cursor-pointer flex-col overflow-hidden rounded-2xl",
-          "border-2 border-dashed transition-colors duration-200 ease-out",
+          "border-2 border-dashed transition-[transform,border-color,background-color] duration-200 ease-out",
           isDragOver
-            ? "border-accent bg-panel-2"
+            ? "border-accent scale-[1.008] animate-glow"
             : "border-rule-2 bg-panel hover:border-muted",
         ].join(" ")}
       >
@@ -415,7 +415,7 @@ export function BgRemovePanel({ tool }: { tool: Tool }) {
         {MODEL_MAP[modelLevel] &&
           downloadedLevels.has(modelLevel) && (
             <span className="ml-auto flex items-center gap-1 rounded-full bg-ok/15 px-2 py-0.5 font-mono text-[0.625rem] font-semibold text-ok">
-              <Check aria-hidden="true" className="h-3 w-3" strokeWidth={2} />
+              <Check aria-hidden="true" className="check-bounce h-3 w-3" strokeWidth={2} />
             {MODEL_MAP[modelLevel].label} cached
           </span>
           )}

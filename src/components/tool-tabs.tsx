@@ -9,7 +9,7 @@ import {
   Video,
   type LucideIcon,
 } from "lucide-react";
-import { useCallback, useRef } from "react";
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 
 export type ToolId =
   | "image"
@@ -93,6 +93,26 @@ interface ToolTabsProps {
 
 export function ToolTabs({ active, onChange }: ToolTabsProps) {
   const tabsRef = useRef<HTMLDivElement>(null);
+  const btnRefs = useRef<(HTMLButtonElement | null)[]>([]);
+  const [pill, setPill] = useState<{ left: number; width: number } | null>(
+    null,
+  );
+
+  const measurePill = useCallback(() => {
+    const idx = TOOLS.findIndex((t) => t.id === active);
+    const el = btnRefs.current[idx];
+    if (!el) return;
+    setPill({ left: el.offsetLeft, width: el.offsetWidth });
+  }, [active]);
+
+  useLayoutEffect(() => {
+    measurePill();
+  }, [measurePill]);
+
+  useEffect(() => {
+    window.addEventListener("resize", measurePill);
+    return () => window.removeEventListener("resize", measurePill);
+  }, [measurePill]);
 
   const onKeyDown = useCallback(
     (e: React.KeyboardEvent<HTMLButtonElement>) => {
@@ -120,14 +140,24 @@ export function ToolTabs({ active, onChange }: ToolTabsProps) {
         role="tablist"
         aria-label="Local tools"
         ref={tabsRef}
-        className="no-scrollbar inline-flex max-w-full items-center gap-1 overflow-x-auto rounded-xl border border-rule bg-panel/60 p-1"
+        className="no-scrollbar relative flex w-full items-center gap-1 overflow-x-auto rounded-xl border border-rule bg-panel/60 p-1"
       >
-        {TOOLS.map((tool) => {
+        <span
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-y-1 rounded-lg bg-paper-3 shadow-sm transition-[left,width] duration-200 ease-out"
+          style={
+            pill ? { left: pill.left, width: pill.width } : undefined
+          }
+        />
+        {TOOLS.map((tool, i) => {
           const isActive = tool.id === active;
           const Icon = tool.icon;
           return (
             <button
               key={tool.id}
+              ref={(el) => {
+                btnRefs.current[i] = el;
+              }}
               data-tab={tool.id}
               role="tab"
               id={`tab-${tool.id}`}
@@ -137,10 +167,10 @@ export function ToolTabs({ active, onChange }: ToolTabsProps) {
               onClick={() => onChange(tool.id)}
               onKeyDown={onKeyDown}
               className={[
-                "group flex shrink-0 cursor-pointer items-center gap-2 whitespace-nowrap rounded-lg px-4 py-2 text-sm font-medium",
+                "group relative z-10 flex shrink-0 cursor-pointer items-center gap-2 whitespace-nowrap rounded-lg px-4 py-2 text-sm font-medium",
                 "transition-colors duration-200 ease-out active:translate-y-px",
                 isActive
-                  ? "bg-paper-3 text-ink shadow-sm"
+                  ? "text-ink"
                   : "text-muted hover:bg-paper-2/60 hover:text-ink-2",
               ].join(" ")}
             >

@@ -256,9 +256,9 @@ export function HashPanel({ tool }: { tool: Tool }) {
         onDrop={onDrop}
         className={[
           "flex cursor-pointer flex-col overflow-hidden rounded-2xl",
-          "border-2 border-dashed transition-colors duration-200 ease-out",
+          "border-2 border-dashed transition-[transform,border-color,background-color] duration-200 ease-out",
           isDragOver
-            ? "border-accent bg-panel-2"
+            ? "border-accent scale-[1.008] animate-glow"
             : "border-rule-2 bg-panel hover:border-muted",
         ].join(" ")}
       >
@@ -487,7 +487,7 @@ export function HashPanel({ tool }: { tool: Tool }) {
                     {copied === key ? (
                       <Check
                         aria-hidden="true"
-                        className="h-4 w-4 text-ok"
+                        className="check-bounce h-4 w-4 text-ok"
                         strokeWidth={1.75}
                       />
                     ) : (
@@ -530,7 +530,7 @@ export function HashPanel({ tool }: { tool: Tool }) {
                 >
                   <CheckCircle2
                     aria-hidden="true"
-                    className="h-4 w-4 shrink-0 text-ok"
+                    className="check-bounce h-4 w-4 shrink-0 text-ok"
                     strokeWidth={2}
                   />
                   <span className="text-sm font-semibold text-ok">

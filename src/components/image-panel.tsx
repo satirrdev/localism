@@ -280,9 +280,9 @@ export function ImagePanel({ tool }: { tool: Tool }) {
         onDrop={onDrop}
         className={[
           "flex cursor-pointer flex-col overflow-hidden rounded-2xl",
-          "border-2 border-dashed transition-colors duration-200 ease-out",
+          "border-2 border-dashed transition-[transform,border-color,background-color] duration-200 ease-out",
           isDragOver
-            ? "border-accent bg-panel-2"
+            ? "border-accent scale-[1.008] animate-glow"
             : "border-rule-2 bg-panel hover:border-muted",
         ].join(" ")}
       >
