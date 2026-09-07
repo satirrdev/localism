@@ -24,27 +24,18 @@ async function merge(buffers, names) {
   return bytes;
 }
 
-async function redact(buffer, terms) {
+async function redact(buffer) {
   const doc = await PDFDocument.load(buffer);
   const pages = doc.getPages();
   const total = pages.length;
 
   for (let i = 0; i < total; i++) {
-    post("progress", { value: Math.round((i / total) * 90), label: `Redacting page ${i + 1}/${total}…` });
+    post("progress", { value: Math.round((i / total) * 90), label: `Blacking out page ${i + 1}/${total}…` });
     const page = pages[i];
     const { width, height } = page.getSize();
-    if (terms.length === 0) {
-      page.drawRectangle({ x: 0, y: 0, width, height, color: rgb(0, 0, 0), opacity: 0 });
-    } else {
-      terms.forEach(() => {
-        page.drawRectangle({
-          x: 0, y: height * 0.1,
-          width, height: height * 0.05,
-          color: rgb(0, 0, 0),
-          opacity: 1,
-        });
-      });
-    }
+    // Always opaque. A transparent fill would silently ship unchanged
+    // content (fail-open redaction).
+    page.drawRectangle({ x: 0, y: 0, width, height, color: rgb(0, 0, 0), opacity: 1 });
   }
 
   post("progress", { value: 95, label: "Saving…" });
@@ -60,7 +51,7 @@ self.onmessage = async (e) => {
     if (op === "merge") {
       bytes = await merge(e.data.buffers, e.data.names);
     } else if (op === "redact") {
-      bytes = await redact(e.data.buffer, e.data.terms ?? []);
+      bytes = await redact(e.data.buffer);
     } else {
       throw new Error(`Unknown op: ${op}`);
     }
@@ -69,3 +60,6 @@ self.onmessage = async (e) => {
     post("error", { id, message: err?.message ?? String(err) });
   }
 };
+/* ponytail: full-page fill covers content but leaves it in the content stream;
+ * true destructive redaction needs pdf.js rasterization — add when the
+ * product requires un-recoverable removal rather than visual blackout. */

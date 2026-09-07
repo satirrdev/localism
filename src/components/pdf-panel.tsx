@@ -82,7 +82,6 @@ export function PdfPanel({ tool }: { tool: Tool }) {
   const [resultUrl, setResultUrl] = useState<string | null>(null);
   const [resultSize, setResultSize] = useState<number>(0);
   const [error, setError] = useState<string | null>(null);
-  const [redactTerms, setRedactTerms] = useState("");
   const dragDepth = useRef(0);
   const resultRef = useRef<string | null>(null);
   const getWorker = useWorker();
@@ -199,10 +198,9 @@ export function PdfPanel({ tool }: { tool: Tool }) {
     if (mode === "merge") {
       worker.postMessage({ op: "merge", id, buffers, names: files.map((f) => f.file.name) }, buffers);
     } else {
-      const terms = redactTerms.split(",").map((s) => s.trim()).filter(Boolean);
-      worker.postMessage({ op: "redact", id, buffer: buffers[0], terms }, [buffers[0]]);
+      worker.postMessage({ op: "redact", id, buffer: buffers[0] }, [buffers[0]]);
     }
-  }, [files, mode, redactTerms, clearResult, getWorker]);
+  }, [files, mode, clearResult, getWorker]);
 
   const inputId = `file-input-${tool.id}`;
   const Icon = tool.icon;
@@ -241,7 +239,7 @@ export function PdfPanel({ tool }: { tool: Tool }) {
           ].join(" ")}
         >
           <FileMinus2 aria-hidden="true" className="h-3.5 w-3.5" strokeWidth={1.75} />
-          Redact
+          Blackout
         </button>
       </div>
 
@@ -281,12 +279,12 @@ export function PdfPanel({ tool }: { tool: Tool }) {
           </span>
           <span className="min-w-0">
             <span className="block text-sm font-semibold text-ink sm:text-base">
-              {mode === "merge" ? "Merge PDFs" : "Redact PDF"}
+              {mode === "merge" ? "Merge PDFs" : "Blackout PDF"}
             </span>
             <span className="mt-0.5 block text-xs leading-relaxed text-muted">
               {mode === "merge"
                 ? "Drop two or more PDFs to merge them into one. pdf-lib runs entirely in a Web Worker, no upload, no server."
-                : "Drop one PDF. Pages are processed in-browser; nothing leaves your device."}
+                : "Drop one PDF. Every page is covered with solid black on this device; nothing leaves your browser."}
             </span>
           </span>
           <span
@@ -316,7 +314,7 @@ export function PdfPanel({ tool }: { tool: Tool }) {
                 ? "Files stay on this device."
                 : mode === "merge"
                 ? "Drop 2+ PDFs · merged in a Worker · never uploaded"
-                : "Drop 1 PDF · redacted in a Worker · never uploaded"}
+                : "Drop 1 PDF · blacked out in a Worker · never uploaded"}
             </span>
           </span>
           <span
@@ -357,23 +355,6 @@ export function PdfPanel({ tool }: { tool: Tool }) {
         </ul>
       )}
 
-      {/* Redact terms input */}
-      {mode === "redact" && files.length === 1 && (
-        <div className="mt-4">
-          <label htmlFor="redact-terms" className="mb-1.5 block text-xs text-muted">
-            Terms to redact (comma-separated), leave blank to mark all pages
-          </label>
-          <input
-            id="redact-terms"
-            type="text"
-            value={redactTerms}
-            onChange={(e) => setRedactTerms(e.target.value)}
-            placeholder="e.g. John Doe, 123-45-6789"
-            className="w-full rounded-xl border border-rule-2 bg-paper-2 px-3 py-2 text-sm text-ink placeholder:text-muted/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
-          />
-        </div>
-      )}
-
       {/* Run button */}
       {files.length > 0 && !progress && (
         <div className="mt-4 flex justify-end">
@@ -391,7 +372,7 @@ export function PdfPanel({ tool }: { tool: Tool }) {
             {mode === "merge" ? (
               <><Merge aria-hidden="true" className="h-4 w-4" strokeWidth={1.75} /> Merge {files.length} PDFs</>
             ) : (
-              <><FileMinus2 aria-hidden="true" className="h-4 w-4" strokeWidth={1.75} /> Redact PDF</>
+              <><FileMinus2 aria-hidden="true" className="h-4 w-4" strokeWidth={1.75} /> Blackout PDF</>
             )}
           </button>
         </div>
@@ -421,13 +402,13 @@ export function PdfPanel({ tool }: { tool: Tool }) {
           </span>
           <div className="min-w-0 flex-1">
             <p className="text-sm font-medium text-ink">
-              {mode === "merge" ? "Merged PDF ready" : "Redacted PDF ready"}
+              {mode === "merge" ? "Merged PDF ready" : "Blacked-out PDF ready"}
             </p>
             <p className="font-mono text-xs text-muted">{formatBytes(resultSize)}</p>
           </div>
           <a
             href={resultUrl}
-            download={mode === "merge" ? "merged.pdf" : "redacted.pdf"}
+            download={mode === "merge" ? "merged.pdf" : "blacked-out.pdf"}
             className="flex items-center gap-1.5 rounded-full px-3 py-2 text-xs font-medium text-accent transition-colors duration-200 ease-out hover:bg-paper-3 active:translate-y-px"
           >
             <Download aria-hidden="true" className="h-4 w-4" strokeWidth={1.5} />

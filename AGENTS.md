@@ -25,6 +25,14 @@ Privacy-first client-side utility suite. Next.js 16 App Router, React 19, Tailwi
 - Thread safety, heavy work (WASM, PDF, image transforms) MUST use Web Workers.
 - Memory hygiene, `URL.revokeObjectURL` on every object URL; terminate workers; no RAM leaks.
 
+## Security context
+- COOP `same-origin` + COEP `require-corp` plus `nosniff`, `no-referrer`, `X-Frame-Options: DENY`, `Permissions-Policy`, and `poweredByHeader: false` are set in `next.config.ts` `headers()`. Verified by curl: applied to HTML routes, `_next/static`, AND files in `public/`. Consequence: no cross-origin subresources allowed unless CORP-marked. `next/font` is self-hosted so fonts pass. Do NOT add CDN scripts/fonts/images; do not remove/weaken the COOP/COEP pair. No CSP header exists (don't add one casually either — WASM + blob URLs need `wasm-unsafe-eval`/`blob:` allowances; a validated policy is drafted in `security-audit-report.md` R1).
+- Zero network calls in `src/` (verified: no fetch/XHR/WebSocket/eval/innerHTML). The only network traffic is same-origin WASM/model fetches at runtime: FFmpeg core `public/ffmpeg/` (via `toBlobURL` in `src/lib/ffmpeg.ts`) and ONNX bg-removal models `public/bgremove/` (fetched by `@imgly/background-removal`, `publicPath` = origin). Keep it that way.
+- Trust boundary: user files + `file.name` are the only attacker-controlled input, and flow into the `download` attribute (React-escaped) and FFmpeg's virtual-FS input name (regex-sanitized in video-panel). Preserve these sanitization patterns; never render file names or worker error strings as HTML (no `dangerouslySetInnerHTML` anywhere — keep it that way). PDF "redaction" is a full-page opaque blackout only (`public/pdf-worker.js`); do not reintroduce the old term-search/transparent-fill logic (see `security-audit-report.md` MEDIUM-001/002).
+- FFmpeg runs on the MAIN THREAD via the `src/lib/ffmpeg.ts` singleton (contradicts the worker rule; long encodes freeze the UI). Don't silently "fix" it into a worker — the shared instance is used by video-panel only.
+- No dimension/size cap on image/video decode (image-panel, watermark, bgremove). A crafted huge image self-DOSes only the visitor's own tab. Keep decode inside workers/OffscreenCanvas.
+- `public/bgremove/` (ONNX models, up to 168 MB) and `public/ffmpeg/` (`ffmpeg-core.wasm`) are committed to git. Create `URL.createObjectURL`/revoke exactly as the panel components do.
+
 ## Conventions / gotchas
 - Design tokens live at ROOT `tokens.css` (`@theme`). globals.css imports it as `@import "../../tokens.css";`, that path is correct relative to `src/app`; do NOT "fix" it. Never inline hex/oklch in components; add tokens to tokens.css first. Colors reference tokens (`bg-paper`, `text-ink`, `border-rule`).
 - Tailwind v4: use `wrap-anywhere`, never `overflow-wrap-anywhere`. No self-referential `@theme inline { --x: var(--x) }`.
