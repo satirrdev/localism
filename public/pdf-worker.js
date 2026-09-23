@@ -1,5 +1,5 @@
 /* pdf-worker.js, runs in a Web Worker, never on main thread */
-importScripts("/pdf-lib.min.js");
+importScripts("./pdf-lib.min.js");
 
 const { PDFDocument, rgb } = PDFLib;
 

@@ -1,5 +1,6 @@
 import { FFmpeg } from "@ffmpeg/ffmpeg";
 import { toBlobURL } from "@ffmpeg/util";
+import { publicUrl } from "./paths";
 
 let ffmpegInstance: FFmpeg | null = null;
 let loadingPromise: Promise<FFmpeg> | null = null;
@@ -10,7 +11,7 @@ export async function getFFmpeg(): Promise<FFmpeg> {
 
   loadingPromise = (async () => {
     const ffmpeg = new FFmpeg();
-    const baseURL = window.location.origin + "/ffmpeg";
+    const baseURL = window.location.origin + publicUrl("/ffmpeg");
 
     ffmpeg.on("log", ({ message }) => {
       if (typeof console !== "undefined") console.debug("[ffmpeg]", message);

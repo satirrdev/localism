@@ -17,6 +17,7 @@ import {
   type DragEvent,
 } from "react";
 import type { Tool } from "./tool-tabs";
+import { publicUrl } from "@/lib/paths";
 
 const MIME: Record<string, string> = {
   webp: "image/webp",
@@ -97,7 +98,7 @@ export function ImagePanel({ tool }: { tool: Tool }) {
 
   const getWorker = useCallback(() => {
     if (!workerRef.current) {
-      workerRef.current = new Worker("/image-worker.js");
+      workerRef.current = new Worker(publicUrl("/image-worker.js"));
     }
     return workerRef.current;
   }, []);

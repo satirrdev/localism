@@ -19,6 +19,7 @@ import {
   type DragEvent,
 } from "react";
 import type { Tool } from "./tool-tabs";
+import { publicUrl } from "@/lib/paths";
 
 /* ── Types ─────────────────────────────────────────────── */
 
@@ -88,7 +89,7 @@ export function HashPanel({ tool }: { tool: Tool }) {
 
   const getWorker = useCallback(() => {
     if (!workerRef.current) {
-      workerRef.current = new Worker("/hash-worker.js");
+      workerRef.current = new Worker(publicUrl("/hash-worker.js"));
     }
     return workerRef.current;
   }, []);

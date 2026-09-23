@@ -18,6 +18,7 @@ import {
   type DragEvent,
 } from "react";
 import type { Tool } from "./tool-tabs";
+import { publicUrl } from "@/lib/paths";
 
 /* ── Types ─────────────────────────────────────────────── */
 
@@ -158,7 +159,7 @@ export function BgRemovePanel({ tool }: { tool: Tool }) {
         const { removeBackground, preload } = mod;
 
         /* preload model so subsequent runs are instant */
-        const base = `${window.location.origin}/bgremove/`;
+        const base = `${window.location.origin}${publicUrl("/bgremove/")}`;
         const modelKey = MODEL_MAP[modelLevel].key;
 
         if (!downloadedLevels.has(modelLevel)) {

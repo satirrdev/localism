@@ -3,10 +3,10 @@
  * Reads the File in 8 MB slices so even 10 GB+ files never blow up memory. */
 
 importScripts(
-  "/spark-md5.min.js",
-  "/js-sha256.min.js",
-  "/js-sha1.min.js",
-  "/js-sha512.min.js",
+  "./spark-md5.min.js",
+  "./js-sha256.min.js",
+  "./js-sha1.min.js",
+  "./js-sha512.min.js",
 );
 
 const CHUNK_SIZE = 8 * 1024 * 1024; // 8 MB

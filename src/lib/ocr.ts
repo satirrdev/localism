@@ -9,6 +9,8 @@
  * during SSR, so everything here runs inside methods only.
  */
 
+import { publicUrl } from "./paths";
+
 export const LANGUAGES = new Set(["eng", "ind"]);
 
 export const DEFAULT_LANG = "eng";
@@ -74,7 +76,7 @@ type WorkerMessage =
 
 /** Resolve a public asset path to an absolute same-origin URL. */
 function assetUrl(path: string): string {
-  return new URL(path, window.location.origin).toString();
+  return new URL(publicUrl(path), window.location.origin).toString();
 }
 
 export class OCRWorker {

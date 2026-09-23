@@ -19,6 +19,7 @@ import {
   type DragEvent,
 } from "react";
 import type { Tool } from "./tool-tabs";
+import { publicUrl } from "@/lib/paths";
 
 type Mode = "merge" | "redact";
 
@@ -58,7 +59,7 @@ function useWorker() {
 
   const getWorker = useCallback(() => {
     if (!workerRef.current) {
-      workerRef.current = new Worker("/pdf-worker.js");
+      workerRef.current = new Worker(publicUrl("/pdf-worker.js"));
     }
     return workerRef.current;
   }, []);
