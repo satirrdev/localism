@@ -4,7 +4,7 @@
 [![Zero Cloud](https://img.shields.io/badge/Cloud_Compute-0%20Bytes%20Sent-success.svg?style=flat-square)](#why-localism)
 [![WebAssembly](https://img.shields.io/badge/Powered_by-WebAssembly-654FF0.svg?style=flat-square&logo=webassembly&logoColor=white)](#tech-stack)
 [![Next.js](https://img.shields.io/badge/Framework-Next.js-black.svg?style=flat-square&logo=nextdotjs&logoColor=white)](#tech-stack)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](https://github.com/username/localism/pulls)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](https://github.com/satirrdev/localism/pulls)
 
 **Zero cloud uploads, WebAssembly at the core, fully offline after the first load.**
 
