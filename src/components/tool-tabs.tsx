@@ -5,6 +5,7 @@ import {
   Image as ImageIcon,
   FileText,
   ScanEye,
+  ScanText,
   Stamp,
   Video,
   type LucideIcon,
@@ -17,7 +18,8 @@ export type ToolId =
   | "video"
   | "hash"
   | "watermark"
-  | "bgremove";
+  | "bgremove"
+  | "ocr";
 
 export interface Tool {
   id: ToolId;
@@ -83,6 +85,15 @@ export const TOOLS: Tool[] = [
     heading: "AI background removal",
     lede: "Erase the background of any photo with an in-browser ONNX AI model. Running fully locally via WebAssembly, no upload, no account.",
     hint: "JPG, PNG, WebP",
+  },
+  {
+    id: "ocr",
+    label: "OCR",
+    icon: ScanText,
+    accept: "image/jpeg,image/png,image/webp,image/bmp,.jpg,.jpeg,.png,.webp,.bmp",
+    heading: "Extract text from images",
+    lede: "Drop a scan or photo and read its text back. Tesseract SIMD WASM runs in a Web Worker; the engine and language model are bundled and cached for offline use.",
+    hint: "JPG, PNG, WebP, BMP",
   },
 ];
 

@@ -5,6 +5,7 @@ import { Code2 } from "lucide-react";
 import { BgRemovePanel } from "@/components/bg-remove-panel";
 import { HashPanel } from "@/components/hash-panel";
 import { ImagePanel } from "@/components/image-panel";
+import { OcrPanel } from "@/components/ocr-panel";
 import { PdfPanel } from "@/components/pdf-panel";
 import { VideoPanel } from "@/components/video-panel";
 import { WatermarkPanel } from "@/components/watermark-panel";
@@ -53,6 +54,8 @@ export default function Home() {
             <WatermarkPanel key={tool.id} tool={tool} />
           ) : activeTool === "bgremove" ? (
             <BgRemovePanel key={tool.id} tool={tool} />
+          ) : activeTool === "ocr" ? (
+            <OcrPanel key={tool.id} tool={tool} />
           ) : (
             <HashPanel key={tool.id} tool={tool} />
           )}
@@ -68,15 +71,17 @@ export default function Home() {
           <p className="font-mono text-xs text-muted">
             localism, a privacy-first utility suite · AGPL-3.0
           </p>
-          <a
-            href="https://github.com/satirrdev/localism"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 rounded-full border border-rule bg-paper-2 px-3 py-1 font-mono text-xs text-ink-2 transition-colors duration-200 ease-out hover:border-rule-2 hover:bg-panel-2"
-          >
-            <Code2 aria-hidden="true" className="h-3.5 w-3.5" strokeWidth={1.75} />
-            Audit on GitHub
-          </a>
+          <div className="flex flex-wrap items-center gap-3">
+            <a
+              href="https://github.com/satirrdev/localism"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 rounded-full border border-rule bg-paper-2 px-3 py-1 font-mono text-xs text-ink-2 transition-colors duration-200 ease-out hover:border-rule-2 hover:bg-panel-2"
+            >
+              <Code2 aria-hidden="true" className="h-3.5 w-3.5" strokeWidth={1.75} />
+              Audit on GitHub
+            </a>
+          </div>
         </div>
       </footer>
     </div>

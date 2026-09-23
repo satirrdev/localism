@@ -1,0 +1,49 @@
+name: CI
+
+# Local machines are deliberately kept light: the heavy Next build, lint and
+# supply-chain audit run here in CI, not on contributors' devices. There is
+# no test runner in this repo; `npm run build` (Turbopack) + `npm run lint`
+# are the gate, and `npm audit` protects the supply chain (0-vuln baseline).
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    name: lint · build · audit
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Check out
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20" # next requires >=20.9.0
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint (ESLint)
+        run: npm run lint
+
+      - name: Cache Next build
+        uses: actions/cache@v4
+        with:
+          path: .next/cache
+          key: ${{ runner.os }}-next-${{ hashFiles('package-lock.json') }}-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-next-${{ hashFiles('package-lock.json') }}-
+
+      - name: Build (Turbopack)
+        run: npm run build
+
+      - name: Audit (supply chain)
+        run: npm audit --audit-level=high
