@@ -39,3 +39,13 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# AI agent / prompt files (local only, not pushed to GitHub)
+AGENTS.md
+CLAUDE.md
+RULES.md
+.agentremember
+.agentrules
+.hallmark/
+.security-audit-baseline.json
+security-audit-report.md
