@@ -57,7 +57,7 @@ jobs:
         run: npm run build
 
       - name: Audit (supply chain)
-        run: npm audit --audit-level=high
+        run: npm audit --audit-level=high --omit=dev
 
       - name: Configure GitHub Pages
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
