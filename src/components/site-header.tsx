@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { Info, Lock, X } from "lucide-react";
 
 const HOW_IT_WORKS =
-  "How it works: All processing runs client-side in your browser's WebAssembly & Web Worker threads. No telemetry, no cloud storage. Open your browser's Network Tab (F12) to verify zero network requests.";
+  "How it works: All processing runs client-side in your browser's WebAssembly & Web Worker threads. Zero file uploads, no cloud storage. Open your browser's Network Tab (F12) to verify that no document or media data ever leaves your device.";
 
 function OfflinePopover({
   open,

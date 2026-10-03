@@ -29,7 +29,7 @@ get the result back. No account, no upload, no server holding your data.
 
 ## Architecture & Privacy
 
-- **Zero network transit** — files are read from disk straight into browser memory and processed locally. No upload, no API, no telemetry. The only requests the app ever makes are same-origin fetches for its own vendored WASM cores and models.
+- **Zero file network transit** — files are read from disk straight into browser memory and processed locally. No file uploads, no processing API. The only external request is privacy-friendly Cloudflare Web Analytics (cookieless, no fingerprinting); all processing cores and models are fetched same-origin and cached locally.
 - **Memory sandboxing** — no server-side storage exists to leak. Data lives in the tab's own memory; every object URL is revoked and every worker terminated on completion or unmount.
 - **Web Workers** — image transforms, hashing, PDF work, FFmpeg, and Tesseract all run off the main thread, so the UI stays responsive under heavy loads.
 - **Vendored WebAssembly** — FFmpeg, Tesseract, and ONNX models are committed to the repo and served from your own origin. No CDN, no third-party runtime fetches.

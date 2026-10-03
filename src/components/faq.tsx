@@ -15,7 +15,7 @@ const FAQS: { q: string; a: string }[] = [
   },
   {
     q: "Is there any tracking or analytics?",
-    a: "None. No analytics scripts, no cookies, no fingerprinting. The page ships static code and operates fully offline \u2014 it even works in airplane mode once loaded and the WASM assets are cached.",
+    a: "We use privacy-friendly, cookieless Cloudflare Web Analytics to measure site traffic without tracking individual users or collecting personal data. No cookies, no fingerprinting, and zero file or document data ever leaves your device.",
   },
   {
     q: "Which tools run in the browser?",
