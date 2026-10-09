@@ -140,10 +140,14 @@ export function OcrPanel({ tool }: { tool: Tool }) {
 
   /* ── preprocessing ───────────────────────── */
 
-  const reprocess = useCallback(() => {
-    const bitmap = bitmapRef.current;
-    if (!bitmap) return;
-    const out = toOcrImageData(bitmap, { rotate, maxSide: 1800 });
+  const reprocess = useCallback(
+    (overrideRotate?: Rotate) => {
+      const bitmap = bitmapRef.current;
+      if (!bitmap) return;
+      const out = toOcrImageData(bitmap, {
+        rotate: overrideRotate ?? rotate,
+        maxSide: 1800,
+      });
     imageDataRef.current = out.imageData;
     linesRef.current = null;
     drawPreview();
@@ -251,7 +255,7 @@ export function OcrPanel({ tool }: { tool: Tool }) {
   const onRotate = useCallback(
     (r: Rotate) => {
       setRotate(r);
-      if (bitmapRef.current) reprocess();
+      if (bitmapRef.current) reprocess(r);
     },
     [reprocess],
   );

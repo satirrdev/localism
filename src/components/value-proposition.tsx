@@ -43,13 +43,13 @@ export function ValueProposition() {
                   Sandboxed in your browser.
                 </h3>
                 <p className="mt-2 text-sm leading-relaxed text-muted">
-                  No data transfers, no remote storage, no tracking pixels.
+                  No file uploads, no remote storage, no tracking of documents.
                   Everything executes in your browser&rsquo;s memory and
                   vanishes when you close the tab.
                 </p>
               </div>
               <p className="font-mono text-xs uppercase tracking-[0.12em] text-neutral">
-                Inspect Network Tab&nbsp;:&nbsp;0 Requests
+                Inspect Network Tab&nbsp;:&nbsp;0 File Uploads
               </p>
             </div>
 

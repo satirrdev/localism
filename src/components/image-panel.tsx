@@ -157,58 +157,63 @@ export function ImagePanel({ tool }: { tool: Tool }) {
     resetResult();
     setProgress({ value: 0, label: "Reading file…" });
 
-    const worker = getWorker();
-    const id = Math.random().toString(36).slice(2);
-    const buffer = await file.arrayBuffer();
+    try {
+      const worker = getWorker();
+      const id = Math.random().toString(36).slice(2);
+      const buffer = await file.arrayBuffer();
 
-    const cleanup = () => {
-      worker.onmessage = null;
-      worker.onerror = null;
-    };
+      const cleanup = () => {
+        worker.onmessage = null;
+        worker.onerror = null;
+      };
 
-    worker.onmessage = (e) => {
-      const msg = e.data;
-      if (msg.id !== id) return;
-      if (msg.type === "progress") {
-        setProgress({ value: msg.value, label: msg.label });
-      } else if (msg.type === "done") {
+      worker.onmessage = (e) => {
+        const msg = e.data;
+        if (msg.id !== id) return;
+        if (msg.type === "progress") {
+          setProgress({ value: msg.value, label: msg.label });
+        } else if (msg.type === "done") {
+          cleanup();
+          setProgress(null);
+          const blob: Blob = msg.blob;
+          const url = URL.createObjectURL(blob);
+          resultRef.current = url;
+          setResultUrl(url);
+          setResultSize(blob.size);
+          setResultDims({ w: msg.width, h: msg.height });
+        } else if (msg.type === "error") {
+          cleanup();
+          setProgress(null);
+          setError(msg.message);
+        }
+      };
+
+      worker.onerror = (e) => {
         cleanup();
         setProgress(null);
-        const blob: Blob = msg.blob;
-        const url = URL.createObjectURL(blob);
-        resultRef.current = url;
-        setResultUrl(url);
-        setResultSize(blob.size);
-        setResultDims({ w: msg.width, h: msg.height });
-      } else if (msg.type === "error") {
-        cleanup();
-        setProgress(null);
-        setError(msg.message);
-      }
-    };
+        setError(e.message);
+      };
 
-    worker.onerror = (e) => {
-      cleanup();
-      setProgress(null);
-      setError(e.message);
-    };
-
-    worker.postMessage(
-      {
-        type: "process",
-        id,
-        buffer,
-        outputMime: MIME[format],
-        quality,
-        resize: {
-          mode: resizeMode,
-          percent: scalePercent,
-          maxWidth: maxW,
-          maxHeight: maxH,
+      worker.postMessage(
+        {
+          type: "process",
+          id,
+          buffer,
+          outputMime: MIME[format],
+          quality,
+          resize: {
+            mode: resizeMode,
+            percent: scalePercent,
+            maxWidth: maxW,
+            maxHeight: maxH,
+          },
         },
-      },
-      [buffer],
-    );
+        [buffer],
+      );
+    } catch (err: unknown) {
+      setProgress(null);
+      setError(err instanceof Error ? err.message : String(err));
+    }
   }, [
     file,
     format,

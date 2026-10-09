@@ -81,6 +81,7 @@ export function BgRemovePanel({ tool }: { tool: Tool }) {
   const originalRef = useRef<string | null>(null);
   const resultRef = useRef<string | null>(null);
   const processedBlobRef = useRef<Blob | null>(null);
+  const rawCutoutBlobRef = useRef<Blob | null>(null);
   const [isDragOver, setIsDragOver] = useState(false);
 
   useEffect(() => {
@@ -186,11 +187,10 @@ export function BgRemovePanel({ tool }: { tool: Tool }) {
           },
         });
 
-        processedBlobRef.current = blob;
-        if (backdrop !== "transparent") {
-          const recolored = await applyBackdrop(blob, backdrop);
-          processedBlobRef.current = recolored;
-        }
+        rawCutoutBlobRef.current = blob;
+        const outputBlob =
+          backdrop === "transparent" ? blob : await applyBackdrop(blob, backdrop);
+        processedBlobRef.current = outputBlob;
 
         if (resultRef.current) URL.revokeObjectURL(resultRef.current);
         const url = URL.createObjectURL(processedBlobRef.current);
@@ -270,6 +270,7 @@ export function BgRemovePanel({ tool }: { tool: Tool }) {
     originalRef.current = null;
     resultRef.current = null;
     processedBlobRef.current = null;
+    rawCutoutBlobRef.current = null;
     setFile(null);
     setOriginalUrl(null);
     setResultUrl(null);
@@ -282,11 +283,15 @@ export function BgRemovePanel({ tool }: { tool: Tool }) {
   const onBackdropChange = useCallback(
     async (next: Backdrop) => {
       setBackdrop(next);
-      if (processedBlobRef.current && status === "done") {
+      if (rawCutoutBlobRef.current && status === "done") {
         try {
-          const recolored = await applyBackdrop(processedBlobRef.current, next);
+          const nextBlob =
+            next === "transparent"
+              ? rawCutoutBlobRef.current
+              : await applyBackdrop(rawCutoutBlobRef.current, next);
+          processedBlobRef.current = nextBlob;
           if (resultRef.current) URL.revokeObjectURL(resultRef.current);
-          const url = URL.createObjectURL(recolored);
+          const url = URL.createObjectURL(nextBlob);
           resultRef.current = url;
           setResultUrl(url);
         } catch {

@@ -245,43 +245,47 @@ export function VideoPanel({ tool }: { tool: Tool }) {
       setProgress({ value: 5, label: "Writing file to sandbox…" });
       await ffmpeg.writeFile(inputName, await fetchFile(file));
 
-      ffmpeg.on("progress", ({ progress: p }) => {
+      const onProgress = ({ progress: p }: { progress: number }) => {
         const clamped = Math.min(Math.max(p, 0), 1);
         const label =
           format === "mp3"
             ? "Extracting audio…"
             : `Encoding ${format.toUpperCase()}…`;
         setProgress({ value: Math.round(clamped * 100), label });
-      });
+      };
+      ffmpeg.on("progress", onProgress);
 
-      const args = buildArgs(
-        inputName,
-        outputName,
-        format,
-        crf,
-        resolution,
-        muteAudio,
-        speed,
-      );
-      setProgress({ value: 8, label: `Starting ${format.toUpperCase()} encode…` });
-      await ffmpeg.exec(args);
+      try {
+        const args = buildArgs(
+          inputName,
+          outputName,
+          format,
+          crf,
+          resolution,
+          muteAudio,
+          speed,
+        );
+        setProgress({ value: 8, label: `Starting ${format.toUpperCase()} encode…` });
+        await ffmpeg.exec(args);
 
-      setProgress({ value: 95, label: "Reading output…" });
-      const data = await ffmpeg.readFile(outputName);
-      const arr =
-        typeof data === "string" ? new TextEncoder().encode(data) : data;
-      const mime = FORMATS.find((f) => f.value === format)!.mime;
-      const blob = new Blob([arr.buffer as ArrayBuffer], { type: mime });
-      const url = URL.createObjectURL(blob);
+        setProgress({ value: 95, label: "Reading output…" });
+        const data = await ffmpeg.readFile(outputName);
+        const arr =
+          typeof data === "string" ? new TextEncoder().encode(data) : data;
+        const mime = FORMATS.find((f) => f.value === format)!.mime;
+        const blob = new Blob([arr.buffer as ArrayBuffer], { type: mime });
+        const url = URL.createObjectURL(blob);
 
-      resultRef.current = url;
-      setResultUrl(url);
-      setResultSize(blob.size);
-      setProgress(null);
-
-      /* cleanup WASM virtual filesystem */
-      await ffmpeg.deleteFile(inputName).catch(() => {});
-      await ffmpeg.deleteFile(outputName).catch(() => {});
+        resultRef.current = url;
+        setResultUrl(url);
+        setResultSize(blob.size);
+        setProgress(null);
+      } finally {
+        ffmpeg.off("progress", onProgress);
+        /* cleanup WASM virtual filesystem */
+        await ffmpeg.deleteFile(inputName).catch(() => {});
+        await ffmpeg.deleteFile(outputName).catch(() => {});
+      }
     } catch (err: unknown) {
       setProgress(null);
       setError(err instanceof Error ? err.message : String(err));

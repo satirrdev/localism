@@ -20,7 +20,7 @@ get the result back. No account, no upload, no server holding your data.
 | Tool | What it does | Input |
 | --- | --- | --- |
 | **Image Compression** | Resize, recompress, transcode, and strip EXIF/GPS via OffscreenCanvas in a Web Worker | PNG, JPG, WebP, GIF, AVIF |
-| **PDF Studio** | Merge, split, sign, and redact (fail-closed full-page blackout) with pdf-lib | PDF |
+| **PDF Studio** | Merge and blackout (fail-closed full-page visual overlay) with pdf-lib | PDF |
 | **Video Transcoding** | Compress, transcode, and extract audio with FFmpeg WASM in a Web Worker | MP4, WebM, GIF, MP3 |
 | **Hash Verification** | SHA-256, SHA-1, SHA-512, and MD5 computed from a streamed 8 MB-chunked read | Any file, any size |
 | **Watermark & Redaction** | Stamp IDs, KTP, passports, and invoices, or censor sensitive fields on Canvas | JPG, PNG, WebP |

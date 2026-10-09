@@ -46,8 +46,8 @@ export const TOOLS: Tool[] = [
     label: "PDF",
     icon: FileText,
     accept: "application/pdf,.pdf",
-    heading: "Merge, split, and sign PDFs",
-    lede: "Combine pages, extract ranges, and stamp signatures. pdf-lib executes entirely in your browser.",
+    heading: "Merge and blackout PDFs",
+    lede: "Combine pages or cover documents with solid blackout. pdf-lib executes entirely in your browser.",
     hint: "PDF",
   },
   {

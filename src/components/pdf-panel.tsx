@@ -162,44 +162,54 @@ export function PdfPanel({ tool }: { tool: Tool }) {
     if (mode === "redact" && files.length !== 1) return;
 
     clearResult();
+    const totalBytes = files.reduce((acc, f) => acc + f.file.size, 0);
+    if (totalBytes > 250 * 1024 * 1024) {
+      setError("Selected PDFs exceed aggregate 250 MB limit. Merge in smaller batches.");
+      return;
+    }
     setError(null);
     setProgress({ value: 0, label: "Reading files…" });
 
-    const worker = getWorker();
+    try {
+      const worker = getWorker();
 
-    const buffers = await Promise.all(files.map((s) => s.file.arrayBuffer()));
-    const id = Math.random().toString(36).slice(2);
+      const buffers = await Promise.all(files.map((s) => s.file.arrayBuffer()));
+      const id = Math.random().toString(36).slice(2);
 
-    const cleanup = () => { worker.onmessage = null; worker.onerror = null; };
+      const cleanup = () => { worker.onmessage = null; worker.onerror = null; };
 
-    worker.onmessage = (e: MessageEvent<WorkerMessage>) => {
-      const msg = e.data;
-      if (msg.type === "progress") {
-        setProgress({ value: msg.value ?? 0, label: msg.label ?? "" });
-      } else if (msg.type === "done" && msg.id === id) {
+      worker.onmessage = (e: MessageEvent<WorkerMessage>) => {
+        const msg = e.data;
+        if (msg.type === "progress") {
+          setProgress({ value: msg.value ?? 0, label: msg.label ?? "" });
+        } else if (msg.type === "done" && msg.id === id) {
+          cleanup();
+          setProgress(null);
+          const blob = new Blob([msg.bytes!.buffer as ArrayBuffer], { type: "application/pdf" });
+          const url = URL.createObjectURL(blob);
+          setResultUrl(url);
+          setResultSize(blob.size);
+        } else if (msg.type === "error" && msg.id === id) {
+          cleanup();
+          setProgress(null);
+          setError(msg.message ?? "Unknown error");
+        }
+      };
+
+      worker.onerror = (e) => {
         cleanup();
         setProgress(null);
-        const blob = new Blob([msg.bytes!.buffer as ArrayBuffer], { type: "application/pdf" });
-        const url = URL.createObjectURL(blob);
-        setResultUrl(url);
-        setResultSize(blob.size);
-      } else if (msg.type === "error" && msg.id === id) {
-        cleanup();
-        setProgress(null);
-        setError(msg.message ?? "Unknown error");
+        setError(e.message);
+      };
+
+      if (mode === "merge") {
+        worker.postMessage({ op: "merge", id, buffers, names: files.map((f) => f.file.name) }, buffers);
+      } else {
+        worker.postMessage({ op: "redact", id, buffer: buffers[0] }, [buffers[0]]);
       }
-    };
-
-    worker.onerror = (e) => {
-      cleanup();
+    } catch (err: unknown) {
       setProgress(null);
-      setError(e.message);
-    };
-
-    if (mode === "merge") {
-      worker.postMessage({ op: "merge", id, buffers, names: files.map((f) => f.file.name) }, buffers);
-    } else {
-      worker.postMessage({ op: "redact", id, buffer: buffers[0] }, [buffers[0]]);
+      setError(err instanceof Error ? err.message : String(err));
     }
   }, [files, mode, clearResult, getWorker]);
 

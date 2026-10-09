@@ -114,6 +114,7 @@ export function WatermarkPanel({ tool }: { tool: Tool }) {
   const wrapRef = useRef<HTMLDivElement>(null);
   const resultRef = useRef<string | null>(null);
   const dragStartRef = useRef<{ x: number; y: number } | null>(null);
+  const stagedUrlRef = useRef<string | null>(null);
 
   useEffect(() => {
     resultRef.current = resultUrl;
@@ -123,6 +124,10 @@ export function WatermarkPanel({ tool }: { tool: Tool }) {
   useEffect(() => {
     return () => {
       if (resultRef.current) URL.revokeObjectURL(resultRef.current);
+      if (stagedUrlRef.current) {
+        URL.revokeObjectURL(stagedUrlRef.current);
+        stagedUrlRef.current = null;
+      }
     };
   }, []);
 
@@ -252,12 +257,17 @@ export function WatermarkPanel({ tool }: { tool: Tool }) {
         URL.revokeObjectURL(resultRef.current);
         resultRef.current = null;
       }
+      if (stagedUrlRef.current) {
+        URL.revokeObjectURL(stagedUrlRef.current);
+        stagedUrlRef.current = null;
+      }
       setResultUrl(null);
       setRedactions([]);
       setActiveRedact(null);
       setError(null);
 
       const url = URL.createObjectURL(f);
+      stagedUrlRef.current = url;
       const image = new Image();
       image.onload = () => {
         setImg(image);
@@ -266,6 +276,7 @@ export function WatermarkPanel({ tool }: { tool: Tool }) {
       };
       image.onerror = () => {
         URL.revokeObjectURL(url);
+        stagedUrlRef.current = null;
         setError("Failed to decode image.");
       };
       image.src = url;
@@ -324,6 +335,10 @@ export function WatermarkPanel({ tool }: { tool: Tool }) {
     if (resultRef.current) {
       URL.revokeObjectURL(resultRef.current);
       resultRef.current = null;
+    }
+    if (stagedUrlRef.current) {
+      URL.revokeObjectURL(stagedUrlRef.current);
+      stagedUrlRef.current = null;
     }
     setResultUrl(null);
     setFile(null);

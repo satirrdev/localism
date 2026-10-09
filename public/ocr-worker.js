@@ -170,29 +170,32 @@ function recognize(payload) {
     // --- line boxes via the result iterator ----------------------------------
     const lines = [];
     const ri = api.GetIterator();
-    ri.Begin();
-    do {
-      if (ri.IsAtBeginningOf(module.RIL_TEXTLINE)) {
-        const bbox = ri.getBoundingBox(module.RIL_TEXTLINE);
-        const lineText = (ri.GetUTF8Text(module.RIL_TEXTLINE) || "").trim();
-        if (!lineText) continue;
-        const lineConf = Math.max(
-          0,
-          Math.min(100, Number(ri.Confidence(module.RIL_TEXTLINE)) || 0),
-        );
-        lines.push({
-          text: lineText,
-          confidence: lineConf,
-          bbox: {
-            x: bbox.x0,
-            y: bbox.y0,
-            width: bbox.x1 - bbox.x0,
-            height: bbox.y1 - bbox.y0,
-          },
-        });
-      }
-    } while (ri.Next(module.RIL_TEXTLINE));
-    module.destroy(ri);
+    try {
+      ri.Begin();
+      do {
+        if (ri.IsAtBeginningOf(module.RIL_TEXTLINE)) {
+          const bbox = ri.getBoundingBox(module.RIL_TEXTLINE);
+          const lineText = (ri.GetUTF8Text(module.RIL_TEXTLINE) || "").trim();
+          if (!lineText) continue;
+          const lineConf = Math.max(
+            0,
+            Math.min(100, Number(ri.Confidence(module.RIL_TEXTLINE)) || 0),
+          );
+          lines.push({
+            text: lineText,
+            confidence: lineConf,
+            bbox: {
+              x: bbox.x0,
+              y: bbox.y0,
+              width: bbox.x1 - bbox.x0,
+              height: bbox.y1 - bbox.y0,
+            },
+          });
+        }
+      } while (ri.Next(module.RIL_TEXTLINE));
+    } finally {
+      module.destroy(ri);
+    }
 
     postMessage({ type: "progress", jobId, status: "done", progress: 1 });
     postMessage({ type: "result", jobId, text, confidence, lines });

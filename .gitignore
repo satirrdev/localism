@@ -53,3 +53,6 @@ RULES.md
 .hallmark/
 .security-audit-baseline.json
 security-audit-report.md
+
+# audit workspace - local and CI artifacts only
+.audit/

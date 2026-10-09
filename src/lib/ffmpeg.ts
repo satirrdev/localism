@@ -73,7 +73,10 @@ export async function getFFmpeg(): Promise<FFmpeg> {
 
     ffmpegInstance = ffmpeg;
     return ffmpeg;
-  })();
+  })().catch((err) => {
+    loadingPromise = null;
+    throw err;
+  });
 
   return loadingPromise;
 }
