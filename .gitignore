@@ -56,3 +56,15 @@ security-audit-report.md
 
 # audit workspace - local and CI artifacts only
 .audit/
+
+# video production (Remotion launch pipeline)
+# Rendered launch videos — regenerate with:
+#   npx remotion render Root LaunchVideo out/launch.mp4 --concurrency=2
+/out/*.mp4
+/out/*.webm
+/out/*.mov
+# Remotion bundler / headless browser cache
+/.remotion/
+# Headless app screenshot used inside the launch video — regenerate with:
+#   node scripts/capture-screenshot.mjs
+/public/screenshot-app.png

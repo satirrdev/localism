@@ -1,6 +1,6 @@
 {
   "name": "localism-scaffold",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "private": true,
   "license": "AGPL-3.0-or-later",
   "scripts": {
@@ -25,13 +25,17 @@
     "spark-md5": "^3.0.2"
   },
   "devDependencies": {
+    "@remotion/cli": "^4.0.534",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "^16.3.6",
+    "playwright": "^1.64.0",
+    "remotion": "^4.0.534",
     "tailwindcss": "^4",
-    "typescript": "^5"
+    "typescript": "^5",
+    "zod": "4.5.4"
   }
 }

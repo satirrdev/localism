@@ -1,5 +1,23 @@
 # Changelog
 
+## v1.1.1 — October 11, 2026
+
+This release focuses on UI polish, compact screen responsiveness, and watermark precision, ensuring repeated security stamps layout cleanly across ID documents without overlapping.
+
+### Added
+* **Launch Video Pipeline**: Added a Remotion-based programmatic composition pipeline and capture script for generating launch demos and showcase assets directly from code.
+
+### Changed
+* **Header Responsiveness**: Updated the site header layout so the wordmark and offline badge remain side-by-side on low-DPI and narrow screens, preventing unwanted line breaks or overlapping elements.
+* **Header Status Badge**: Simplified the offline indicator badge by removing redundant iconography and glowing halos, keeping the status display unobtrusive.
+* **Branding & Copy**: Cleaned up section subtitles, document metadata, and footer labels by removing repetitive "utility suite" phrasing in favor of direct, concise descriptions.
+* **Dropzone Motion**: Removed idle floating animations from upload dropzones across all tool panels, creating a calmer, more utilitarian workspace.
+* **Status Icons**: Replaced raw text symbols and emojis in the background removal tool with consistent vector icons.
+
+### Fixed
+* **Watermark Tiling**: Resolved an issue where tiled text watermarks stacked horizontally on top of each other without margins, producing solid smudged bars across ID cards and documents. Repeated watermarks now calculate layout bounds from measured text width with balanced horizontal padding and staggered rows.
+* **FAQ Punctuation**: Fixed stray em dashes in the offline connectivity explanation for cleaner copy flow.
+
 ## v1.1.0 — October 9, 2026
 
 This release hardens the offline toolkit: clearer and more accurate documentation, more resilient media processing, and a set of memory-leak and error-recovery fixes surfaced by an internal audit. Everything still runs entirely in your browser, and privacy claims now match reality.
