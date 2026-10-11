@@ -14,9 +14,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Localism, Local-first utility suite",
+  title: "Localism",
   description:
-    "A 100% offline utility suite. Process files in your browser, nothing leaves this device.",
+    "100% offline tools. Process files in your browser, nothing leaves this device.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

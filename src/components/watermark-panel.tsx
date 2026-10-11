@@ -174,15 +174,16 @@ export function WatermarkPanel({ tool }: { tool: Tool }) {
       ctx.translate(W / 2, H / 2);
       ctx.rotate((rotation * Math.PI) / 180);
       ctx.globalAlpha = opacity / 150; // lighter for tiled
-      const step = base * 3;
-      const span = Math.ceil(Math.hypot(W, H) / step) + 2;
-      for (let i = -span; i <= span; i++) {
-        for (let j = -span; j <= span; j++) {
-          ctx.fillText(
-            text,
-            i * step,
-            j * step,
-          );
+      const textWidth = ctx.measureText(text).width;
+      const stepX = textWidth + base * 3;
+      const stepY = base * 3.5;
+      const maxDim = Math.hypot(W, H);
+      const spanX = Math.ceil(maxDim / stepX) + 1;
+      const spanY = Math.ceil(maxDim / stepY) + 1;
+      for (let j = -spanY; j <= spanY; j++) {
+        const offsetX = (j % 2) * (stepX / 2);
+        for (let i = -spanX; i <= spanX; i++) {
+          ctx.fillText(text, i * stepX + offsetX, j * stepY);
         }
       }
       ctx.restore();
@@ -434,7 +435,6 @@ export function WatermarkPanel({ tool }: { tool: Tool }) {
           <span
             className={[
               "flex h-12 w-12 items-center justify-center rounded-full transition-colors duration-200 ease-out",
-              !isDragOver && "animate-float",
               isDragOver
                 ? "bg-accent/10 text-accent"
                 : "bg-paper-2 text-muted",

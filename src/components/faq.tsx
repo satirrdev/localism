@@ -23,7 +23,7 @@ const FAQS: { q: string; a: string }[] = [
   },
   {
     q: "Can I use Localism without an internet connection?",
-    a: "After the page has loaded and the FFmpeg/ONNX cores are cached, the entire suite works offline. No account, no install, no upload \u2014 just your browser.",
+    a: "After the page has loaded and the FFmpeg/ONNX cores are cached, the entire suite works offline. No account, no install, no upload, just your browser.",
   },
 ];
 

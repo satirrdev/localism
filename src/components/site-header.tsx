@@ -104,11 +104,11 @@ export function SiteHeader() {
 
   return (
     <header className="relative border-b border-rule bg-paper">
-      <div className="mx-auto flex w-full max-w-5xl flex-wrap items-center justify-between gap-x-4 gap-y-2 px-4 py-3 sm:px-6">
+      <div className="mx-auto flex w-full max-w-5xl items-center justify-between gap-3 px-4 py-3 sm:px-6">
         <a
           href="#"
           aria-label="Localism home"
-          className="group flex items-center gap-2 font-mono text-sm font-semibold tracking-tight text-ink"
+          className="group flex shrink-0 items-center gap-2 font-mono text-sm font-semibold tracking-tight text-ink"
         >
           <span
             aria-hidden="true"
@@ -123,22 +123,11 @@ export function SiteHeader() {
           onClick={() => setOpen((v) => !v)}
           aria-haspopup="dialog"
           aria-expanded={open}
-          className="flex cursor-pointer items-center gap-2 rounded-full border border-rule bg-paper-3 px-3 py-1 transition-colors duration-200 ease-out hover:border-rule-2 hover:bg-panel-2"
+          className="flex shrink-0 cursor-pointer items-center gap-2 rounded-full border border-rule bg-paper-3 px-3 py-1 transition-colors duration-200 ease-out hover:border-rule-2 hover:bg-panel-2"
         >
-          <span
-            aria-hidden="true"
-            className="animate-glow relative flex h-2 w-2"
-          >
-            <span className="absolute inline-flex h-full w-full rounded-full bg-ok opacity-60" />
-            <span className="status-dot relative inline-flex h-2 w-2 rounded-full bg-ok" />
-          </span>
-          <Lock
-            aria-hidden="true"
-            className="h-3 w-3 text-ink-2"
-            strokeWidth={1.75}
-          />
+          <span className="status-dot relative inline-flex h-2 w-2 rounded-full bg-ok" />
           <span className="whitespace-nowrap font-mono text-[0.6875rem] font-medium uppercase tracking-[0.08em] text-ink-2">
-            100% Offline / Local Processing
+            100% Offline
           </span>
           <Info
             aria-hidden="true"

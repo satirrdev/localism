@@ -29,7 +29,7 @@ export default function Home() {
         <div className="mx-auto w-full max-w-5xl px-4 pb-2 pt-10 sm:px-6 sm:pt-16">
           <div className="stagger">
             <p className="font-mono text-xs uppercase tracking-[0.14em] text-neutral">
-              Localism / utility suite
+              Localism
             </p>
             <h1 className="mt-2 max-w-[22ch] min-w-0 text-3xl font-semibold tracking-tight text-ink wrap-anywhere sm:text-5xl">
               Your files, processed on this device.
@@ -69,7 +69,7 @@ export default function Home() {
       <footer className="border-t border-rule">
         <div className="mx-auto flex w-full max-w-5xl flex-wrap items-center justify-between gap-3 px-4 py-6 sm:px-6">
           <p className="font-mono text-xs text-muted">
-            localism, a privacy-first utility suite · AGPL-3.0
+            localism · AGPL-3.0
           </p>
           <div className="flex flex-wrap items-center gap-3">
             <a

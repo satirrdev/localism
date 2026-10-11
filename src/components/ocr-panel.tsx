@@ -370,7 +370,6 @@ export function OcrPanel({ tool }: { tool: Tool }) {
           <span
             className={[
               "flex h-12 w-12 items-center justify-center rounded-full transition-colors duration-200 ease-out",
-              !isDragOver && "animate-float",
               isDragOver
                 ? "bg-accent/10 text-accent"
                 : "bg-paper-2 text-muted",

@@ -8,6 +8,7 @@ import {
   UploadCloud,
   X,
   Check,
+  Zap,
 } from "lucide-react";
 import {
   useCallback,
@@ -384,7 +385,6 @@ export function BgRemovePanel({ tool }: { tool: Tool }) {
           <span
             className={[
               "flex h-12 w-12 items-center justify-center rounded-full transition-colors duration-200 ease-out",
-              !isDragOver && "animate-float",
               isDragOver
                 ? "bg-accent/10 text-accent"
                 : "bg-paper-2 text-muted",
@@ -415,7 +415,7 @@ export function BgRemovePanel({ tool }: { tool: Tool }) {
 
       {/* ── helper note ───────────────────────────── */}
       <p className="mt-3 flex items-center gap-2 rounded-xl border border-rule bg-paper-2 px-3 py-2 text-xs leading-relaxed text-muted animate-pop">
-        <span className="text-accent">⚡</span>
+        <Zap aria-hidden="true" className="h-3.5 w-3.5 text-accent shrink-0" strokeWidth={1.75} />
         Powered by OIEL, in-browser ONNX AI. Higher quality models download on
         first use and are cached by your browser.
         {MODEL_MAP[modelLevel] &&
@@ -447,7 +447,7 @@ export function BgRemovePanel({ tool }: { tool: Tool }) {
           >
             {MODEL_MAP[lvl].label}
             {downloadedLevels.has(lvl) ? (
-              <span className="ml-1.5 font-mono text-[0.625rem] text-ok/80">✓</span>
+              <Check aria-hidden="true" className="ml-1 inline h-3 w-3 text-ok/80" strokeWidth={2} />
             ) : (
               <span className="ml-1.5 font-mono text-[0.625rem] text-muted/60">
                 {MODEL_MAP[lvl].size}
